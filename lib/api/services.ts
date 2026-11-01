@@ -1,16 +1,16 @@
 // Services & Shops: neighbour-shared contacts and resident businesses.
 import type { Business, Contact } from '../types';
-import { mustChange, PERSON, run, supabase } from './client';
+import { mustChange, person, run, supabase } from './client';
 
 export const listContacts = () =>
-  run<Contact[]>(supabase.from('contacts').select(`*, author:profiles(${PERSON})`).order('created_at', { ascending: false }));
+  run<Contact[]>(supabase.from('contacts').select(`*, ${person('author', 'contacts_added_by_fkey')}`).order('created_at', { ascending: false }));
 
 export type NewContact = { name: string; service: string; phone: string; note: string };
 export const addContact = (input: NewContact) => run(supabase.from('contacts').insert(input));
 export const deleteContact = (id: string) => mustChange(supabase.from('contacts').delete().eq('id', id).select('id'));
 
 export const listBusinesses = () =>
-  run<Business[]>(supabase.from('businesses').select(`*, owner:profiles(${PERSON})`).order('created_at', { ascending: false }));
+  run<Business[]>(supabase.from('businesses').select(`*, ${person('owner', 'businesses_owner_id_fkey')}`).order('created_at', { ascending: false }));
 
 export type NewBusiness = {
   name: string;

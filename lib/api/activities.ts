@@ -1,8 +1,8 @@
 // Activities: free (instant) and paid (admin approval + Pay (test)).
 import type { Activity, ActivityStatus } from '../types';
-import { mustChange, myId, PERSON, run, supabase } from './client';
+import { mustChange, myId, person, run, supabase } from './client';
 
-const ACTIVITY = `*, author:profiles(${PERSON}), activity_joins(user_id)`;
+const ACTIVITY = `*, ${person('author', 'activities_created_by_fkey')}, activity_joins(user_id)`;
 
 /** Upcoming activities you can see (live ones, plus your own / admin-visible pending ones). */
 export function listActivities() {

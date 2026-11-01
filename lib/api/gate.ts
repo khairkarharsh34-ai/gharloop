@@ -1,8 +1,8 @@
 // Gate & Visitors: passes with 6-digit codes, guard console, SOS (live).
 import type { SosAlert, Visitor, VisitorStatus } from '../types';
-import { mustChange, myId, PERSON, run, supabase } from './client';
+import { mustChange, myId, person, run, supabase } from './client';
 
-const VISITOR = `*, resident:profiles(${PERSON})`;
+const VISITOR = `*, ${person('resident', 'visitors_resident_id_fkey')}`;
 
 export async function listMyVisitors() {
   return run<Visitor[]>(
@@ -31,7 +31,7 @@ export const raiseSos = (note: string) => run(supabase.from('sos_alerts').insert
 
 export const listActiveSos = () =>
   run<SosAlert[]>(
-    supabase.from('sos_alerts').select(`*, person:profiles(${PERSON})`).eq('status', 'active').order('created_at', { ascending: false }),
+    supabase.from('sos_alerts').select(`*, ${person('person', 'sos_alerts_user_id_fkey')}`).eq('status', 'active').order('created_at', { ascending: false }),
   );
 
 export const resolveSos = (id: string) => mustChange(supabase.from('sos_alerts').update({ status: 'resolved' }).eq('id', id).select('id'));

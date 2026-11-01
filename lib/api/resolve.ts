@@ -1,8 +1,8 @@
 // Resolve: issues, owners, deadlines, timeline.
 import type { Issue, IssueStatus, IssueUpdate, Priority } from '../types';
-import { mustChange, PERSON, run, supabase } from './client';
+import { mustChange, person, run, supabase } from './client';
 
-const ISSUE = `*, author:profiles(${PERSON})`;
+const ISSUE = `*, ${person('author', 'issues_created_by_fkey')}`;
 
 export function listIssues(filter: 'active' | 'resolved' | 'all' = 'active') {
   let q = supabase.from('issues').select(ISSUE).order('created_at', { ascending: false });
@@ -15,7 +15,7 @@ export const getIssue = (id: string) => run<Issue>(supabase.from('issues').selec
 
 export const listIssueUpdates = (id: string) =>
   run<IssueUpdate[]>(
-    supabase.from('issue_updates').select(`id, note, created_at, author:profiles(${PERSON})`).eq('issue_id', id).order('created_at'),
+    supabase.from('issue_updates').select(`id, note, created_at, ${person('author', 'issue_updates_author_id_fkey')}`).eq('issue_id', id).order('created_at'),
   );
 
 export type NewIssue = { title: string; description: string; category: string; priority: Priority; photo_url: string | null };

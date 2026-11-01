@@ -6,6 +6,13 @@ export { supabase };
 /** Columns shown next to anything a neighbour created ("Priya Nair · A-302"). */
 export const PERSON = 'full_name, tower, flat';
 
+/**
+ * Attaches the person who created a row, e.g. person('author', 'issues_created_by_fkey').
+ * The foreign key is named because some tables reach profiles in two ways
+ * (an activity has a host *and* people who joined), and the database must know which one.
+ */
+export const person = (alias: string, fk: string) => `${alias}:profiles!${fk}(${PERSON})`;
+
 type Result = { data: unknown; error: { message: string } | null };
 
 // We have no generated DB types, so each call states the shape it expects.

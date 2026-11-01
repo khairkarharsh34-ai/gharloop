@@ -1,10 +1,10 @@
 // Community: announcements + RSVP, board, group chats (live).
 import type { Announcement, BoardKind, BoardPost, ChatGroup, Message } from '../types';
-import { mustChange, myId, PERSON, run, supabase } from './client';
+import { mustChange, myId, person, run, supabase } from './client';
 
 export const listAnnouncements = () =>
   run<Announcement[]>(
-    supabase.from('announcements').select(`*, author:profiles(${PERSON}), rsvps(user_id)`).order('created_at', { ascending: false }),
+    supabase.from('announcements').select(`*, ${person('author', 'announcements_author_id_fkey')}, rsvps(user_id)`).order('created_at', { ascending: false }),
   );
 
 export type NewAnnouncement = { title: string; body: string; event_at: string | null; location: string | null };
@@ -17,7 +17,7 @@ export async function setRsvp(announcementId: string, going: boolean) {
 }
 
 export const listBoard = () =>
-  run<BoardPost[]>(supabase.from('board_posts').select(`*, author:profiles(${PERSON})`).order('created_at', { ascending: false }));
+  run<BoardPost[]>(supabase.from('board_posts').select(`*, ${person('author', 'board_posts_author_id_fkey')}`).order('created_at', { ascending: false }));
 export const createBoardPost = (kind: BoardKind, body: string) => run(supabase.from('board_posts').insert({ kind, body }));
 export const deleteBoardPost = (id: string) => mustChange(supabase.from('board_posts').delete().eq('id', id).select('id'));
 
@@ -39,7 +39,7 @@ export const getGroup = (id: string) =>
 export const createGroup = (name: string, description: string) =>
   run<{ id: string }>(supabase.from('chat_groups').insert({ name, description }).select('id').single());
 
-const MESSAGE = `id, body, created_at, author_id, author:profiles(${PERSON})`;
+const MESSAGE = `id, body, created_at, author_id, ${person('author', 'messages_author_id_fkey')}`;
 
 export async function listMessages(groupId: string) {
   const rows = await run<Message[]>(

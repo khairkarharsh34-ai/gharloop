@@ -1,10 +1,10 @@
 // Need Help: service requests tracked until done.
 import type { HelpRequest, HelpStatus } from '../types';
-import { mustChange, PERSON, run, supabase } from './client';
+import { mustChange, person, run, supabase } from './client';
 
 export const listHelp = () =>
   run<HelpRequest[]>(
-    supabase.from('help_requests').select(`*, requester:profiles(${PERSON})`).order('created_at', { ascending: false }),
+    supabase.from('help_requests').select(`*, ${person('requester', 'help_requests_user_id_fkey')}`).order('created_at', { ascending: false }),
   );
 
 export type NewHelp = { category: string; details: string; preferred: HelpRequest['preferred'] };
