@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Padosi — Happy Community</title>
+<style>
+:root{--g:#245c43;--soft:#eaf3ed;--ink:#18211c;--muted:#69736b;--bg:#f5f7f4;--card:#fff;--line:#e3e8e3;--gold:#a76b17;--red:#b54141}
+*{box-sizing:border-box}body{margin:0;background:#e8ede8;font-family:Inter,system-ui,sans-serif;color:var(--ink)}.app{max-width:450px;margin:auto;min-height:100vh;background:var(--bg);box-shadow:0 0 35px #0001}
+header{background:#fff;padding:19px;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.brand{font-size:25px;font-weight:900}.tag{font-size:11px;color:var(--muted)}main{padding:16px 15px 92px}.view{display:none}.view.active{display:block}.hello{font-size:21px;font-weight:850}.muted{font-size:12px;color:var(--muted)}.section{display:flex;justify-content:space-between;margin:20px 2px 9px;font-weight:850}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.tile,.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px}.tile{cursor:pointer}.tile .ico{font-size:24px}.tile b{display:block;margin-top:6px}.tile small{color:var(--muted);font-size:10px}.card{margin-bottom:9px}.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.pill{font-size:10px;padding:5px 8px;border-radius:20px;background:var(--soft);color:var(--g);font-weight:800}.gold{background:#fff1d9;color:var(--gold)}.red{background:#ffe9e9;color:var(--red)}.pill.verify{background:#e7f0ff;color:#2451b0}
+.fine{font-size:10px;color:var(--muted);line-height:1.5;margin:9px 2px 2px}
+.btn{border:0;border-radius:11px;padding:10px 12px;background:var(--g);color:#fff;font-weight:800;cursor:pointer}.btn.secondary{background:#edf1ed;color:var(--g)}.btn.danger{background:#ffe9e9;color:var(--red)}.full{width:100%;margin-top:9px}.bar{height:7px;background:#edf0ed;border-radius:8px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--g)}
+.activity{display:flex;gap:10px;align-items:center}.date{width:48px;height:52px;border-radius:12px;background:var(--soft);display:flex;flex-direction:column;justify-content:center;align-items:center;color:var(--g);font-weight:850;font-size:10px}.date small{font-size:8px}.grow{flex:1}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(450px,100%);height:68px;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:10}.nav button{border:0;background:transparent;color:var(--muted);font-size:10px}.nav button span{display:block;font-size:19px;margin-bottom:3px}.nav .active{color:var(--g);font-weight:900}
+.tabs{display:flex;gap:4px;background:#edf1ed;padding:3px;border-radius:12px}.tabs button{flex:1;border:0;background:transparent;padding:9px;border-radius:9px;font-weight:800;color:var(--muted)}.tabs .sel{background:#fff;color:var(--g)}
+.input{width:100%;padding:11px;border:1px solid var(--line);border-radius:11px;margin-top:10px}.switch{width:42px;height:24px;border-radius:20px;background:#cbd3cc;padding:3px}.switch.on{background:var(--g)}.knob{width:18px;height:18px;background:white;border-radius:50%}.on .knob{margin-left:18px}
+.metric{font-size:21px;font-weight:900}.small{font-size:10px;color:var(--muted)}.timeline{border-left:2px solid #dce5de;padding-left:13px;margin:10px 0}.step{font-size:11px;margin:0 0 11px}.step b{display:block}.step span{color:var(--muted)}
+.money{font-size:22px;font-weight:900}.ok{color:var(--g)}.warn{color:var(--gold)}
+.toast{display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#18211c;color:white;padding:10px 14px;border-radius:11px;font-size:11px;z-index:20;white-space:nowrap}
+</style></head><body><div class="app">
+<header><div class="brand">Padosi</div><div class="tag">Your community, made useful — and happier.</div></header>
+<main>
+
+<section id="home" class="view active">
+<div class="hello">Good evening, Akash 👋</div><div class="muted">Green Valley Heights · Pune</div>
+<div class="section">Your community</div><div class="grid">
+<div class="tile" onclick="go('resolve')"><div class="ico">🏢</div><b>Resolve</b><small>Issues, owners & deadlines</small></div>
+<div class="tile" onclick="go('community')"><div class="ico">🤝</div><b>Community</b><small>Neighbours, chats & announcements</small></div>
+<div class="tile" onclick="go('activities')"><div class="ico">🎯</div><b>Activities</b><small>Free, paid & nearby</small></div>
+<div class="tile" onclick="go('services')"><div class="ico">🛠️</div><b>Services & Shops</b><small>Recommended local help</small></div>
+<div class="tile" onclick="go('needhelp')"><div class="ico">🆘</div><b>Need Help</b><small>Request trusted help</small></div>
+<div class="tile" onclick="go('funds')"><div class="ico">💰</div><b>Funds</b><small>Maintenance transparency</small></div>
+<div class="tile" onclick="go('gate')"><div class="ico">🚪</div><b>Gate & Visitors</b><small>Pre-approve & SOS</small></div>
+</div>
+<div class="section">This week</div>
+<div class="card"><div class="row"><b>🛗 Lift B2</b><span class="pill gold">Owner assigned</span></div><div class="muted">Owner: Maintenance Committee · Due: 30 Aug</div><div class="bar"><i style="width:70%"></i></div></div>
+<div class="card"><div class="row"><b>🧘 Sunday Yoga</b><span class="pill">7/10</span></div><div class="muted">Resident-led · FREE · Clubhouse · 7 AM</div></div>
+<div class="card"><div class="row"><b>🍰 Neha's Home Cakes</b><span class="pill">Resident business</span></div><div class="muted">Fresh cakes & cupcakes · Pre-order</div></div>
+</section>
+
+<section id="resolve" class="view"><div class="hello">Resolve</div><div class="muted">Less fighting: one issue, one owner, one deadline, one visible status.</div>
+<div class="section">Open issues</div>
+<div class="card"><div class="row"><b>🛗 Lift B2</b><span class="pill gold">In progress</span></div><div class="muted">43 flats affected · Priority High</div><div class="timeline"><div class="step">✅ Reported <span>29 Aug</span></div><div class="step">✅ Discussed in weekly meeting</div><div class="step">🟡 <b>Owner: Maintenance Committee</b><span>Vendor coordination · Due 30 Aug</span></div><div class="step">⚪ Resolution proof required</div></div><button class="btn full" onclick="toast('Owner and deadline updated')">View / follow up</button></div>
+<div class="card"><div class="row"><b>💧 Water leakage B-1204</b><span class="pill">Resolved</span></div><div class="muted">Owner: Plumbing Vendor · Closed with photo proof</div></div>
+<div class="section">Weekly meeting accountability</div>
+<div class="card"><b>Meeting: Sunday · 11:00 AM</b><div class="muted">Each open issue must have an owner + next action + due date.</div><button class="btn full" onclick="toast('Meeting action list opened')">Open action list</button></div>
+<button class="btn full" onclick="report()">+ Report issue</button></section>
+
+<section id="community" class="view"><div class="hello">Community</div><div class="muted">Make information visible without 200-message WhatsApp threads.</div>
+<div class="section">💬 Group chats</div>
+<div class="card"><div class="row"><b>🏢 Tower B Residents</b><span class="pill">142 members</span></div><div class="muted">General discussion for Tower B</div><button class="btn secondary full" onclick="toast('Opening Tower B Residents chat')">Open chat</button></div>
+<div class="card"><div class="row"><b>🧘 Yoga Group</b><span class="pill">18 members</span></div><div class="muted">Coordinating morning sessions</div><button class="btn secondary full" onclick="toast('Opening Yoga Group chat')">Open chat</button></div>
+<div class="card"><div class="row"><b>🐾 Pet Owners</b><span class="pill">27 members</span></div><div class="muted">Walks, vets, pet-sitting swaps</div><button class="btn secondary full" onclick="toast('Opening Pet Owners chat')">Open chat</button></div>
+<button class="btn full secondary" onclick="createGroup()">+ Create a group</button>
+<div class="fine">Group chats are moderated under the same community guidelines as the rest of Padosi — the Grievance Officer can review reported messages.</div>
+<div class="section">Announcements</div><div class="card"><b>📢 Water tank cleaning</b><div class="muted">Sunday · 2 PM–5 PM · Admin</div></div>
+<div class="card"><b>🤝 Weekly community meeting</b><div class="muted">Sunday · Clubhouse · All residents welcome</div><button class="btn secondary full" onclick="toast('RSVP recorded')">I'm attending</button></div>
+<div class="section">Community businesses</div><div class="card"><b>🍰 Neha's Home Cakes</b><div class="muted">Resident · A-504 · Cakes, cupcakes, celebration boxes</div><button class="btn full" onclick="toast('Order request sent to Neha')">View menu / Order</button></div>
+<div class="card"><b>🍱 Kavita Home Mess</b><div class="muted">Resident · C-203 · Monthly & daily vegetarian meals</div><button class="btn full" onclick="toast('Mess enquiry sent')">View plans</button></div>
+<div class="section">Neighbour help</div><div class="card"><b>❤️ Community board</b><div class="muted">Ask for help, lend something, recommend a neighbour — with moderation.</div><button class="btn secondary full" onclick="toast('Create community post')">+ Post</button></div></section>
+
+<section id="activities" class="view"><div class="hello">Activities & Play</div><div class="muted">Community-led first. Professional activities only when your society permits.</div>
+<div class="tabs"><button class="sel" onclick="tab('mine',this)">My Society</button><button onclick="tab('nearby',this)">Discover Nearby</button></div>
+<div id="mine"><div class="section">🆓 Free resident activities</div>
+<div class="card activity"><div class="date">SUN<small>30 AUG</small></div><div class="grow"><b>🧘 Morning Yoga</b><div class="muted">Priya · Clubhouse · 7 AM · 7/10</div></div><button class="btn" onclick="join(this)">Join</button></div>
+<div class="card activity"><div class="date">SAT<small>05 SEP</small></div><div class="grow"><b>🏸 Badminton</b><div class="muted">7 PM · Intermediate · 3/4</div></div><button class="btn" onclick="join(this)">Join</button></div>
+<div class="section">💰 Paid community activities</div><div class="card activity"><div class="date">SUN<small>30 AUG</small></div><div class="grow"><b>🎂 Cake Making Workshop</b><div class="muted">Resident-led · 5 PM · ₹499 · 8/10</div></div><button class="btn" onclick="join(this)">Join</button></div>
+<div class="card activity"><div class="date">SAT<small>05 SEP</small></div><div class="grow"><b>🎨 Kids' Art Workshop</b><div class="muted">Ages 5–10 · 4 PM · ₹400 · Parent/guardian must accompany</div></div><button class="btn" onclick="join(this)">Join</button></div>
+<div class="card activity"><div class="date">TBD<small>—</small></div><div class="grow"><b>🎹 Piano Basics for Kids</b><div class="muted">Submitted by Meera, B-604 · ₹350/session</div></div><span class="pill gold">Pending approval</span></div>
+<div class="fine">Free activities publish instantly. Paid activities go to the Padosi Super Admin for a quick safety & pricing check before residents can join. Resident businesses and issues stay with your Society Admin.</div>
+<button class="btn full secondary" onclick="toast('Create Activity: free or paid → details → capacity → publish (paid activities also need Super Admin approval)')">+ Create Activity</button></div>
+<div id="nearby" style="display:none"><div class="section">📍 Nearby professional activities</div>
+<div class="card"><div class="row"><b>🧘 Yoga with Priya Studio</b><span class="pill gold">Sponsored</span></div><div class="muted">2.1 km · ⭐4.8 · ₹200/session</div><button class="btn full" onclick="toast('Professional activity opened')">Explore</button></div>
+<div class="card"><div class="row"><b>💃 Rhythm Dance Academy</b><span class="pill gold">Sponsored</span></div><div class="muted">1.6 km · ⭐4.7 · ₹300/session</div><button class="btn full" onclick="toast('Professional activity opened')">Explore</button></div>
+<div class="card"><b>Society permission</b><div class="muted">External promotions are controlled by your Society Admin.</div><button class="btn secondary full" onclick="go('admin')">View admin setting</button></div></div></section>
+
+<section id="services" class="view"><div class="hello">Services & Resident Businesses</div>
+<button class="btn full" onclick="go('needhelp')">Need Help — Find a service</button><div class="muted">Find help your neighbours actually use.</div><input class="input" placeholder="Search maid, cook, cake, mess, laundry...">
+<div class="row" style="margin-top:11px"><span class="pill">Resident-recommended</span><span class="pill verify">Platform-verified</span></div>
+<div class="fine">"Verified" means Padosi or a partner agency checked ID/background. "Recommended" means neighbours have used and rated them — always your own judgement for who you let into your home.</div>
+<div class="section">Daily services</div><div class="grid">
+<div class="tile" onclick="toast('Maid service')">🧹 <b>Maid</b><small>Recommended & verified</small></div><div class="tile" onclick="toast('Cook service')">👩‍🍳 <b>Cook</b><small>Home cooks</small></div><div class="tile" onclick="toast('Laundry')">👕 <b>Laundry</b><small>Pickup & delivery</small></div><div class="tile" onclick="toast('Car service')">🚗 <b>Car Service</b><small>Nearby providers</small></div><div class="tile" onclick="toast('2-wheeler service')">🏍️ <b>2-Wheeler</b><small>Repair & service</small></div><div class="tile" onclick="toast('Catering')">🍱 <b>Catering</b><small>Small house parties</small></div></div>
+<div class="section">📇 Neighbour-shared contacts</div>
+<div class="card"><div class="row"><b>🔧 Ramesh — Plumber</b><span class="pill">Added by B-1102</span></div><div class="muted">+91 98•••••45 · Available 9 AM–8 PM</div><button class="btn secondary full" onclick="toast('Contact revealed & saved')">Call / Save contact</button></div>
+<div class="card"><div class="row"><b>🧹 Sunita — Maid</b><span class="pill">Added by A-201</span></div><div class="muted">+91 90•••••12 · Mornings only</div><button class="btn secondary full" onclick="toast('Contact revealed & saved')">Call / Save contact</button></div>
+<button class="btn full secondary" onclick="addContact()">+ Add a contact you trust</button>
+<div class="fine">Only add a number with that person's consent. These are neighbour tips, not Padosi-verified listings — do your own check before hiring.</div>
+<div class="section">🏠 Resident businesses</div><div class="card"><div class="row"><b>🍰 Neha's Home Cakes</b><span class="pill verify">FSSAI declared</span></div><div class="muted">A-504 · ⭐4.9 · Cakes, cupcakes & dessert boxes</div><button class="btn full" onclick="toast('Menu opened')">View menu</button></div>
+<div class="card"><div class="row"><b>🍱 Kavita Home Mess</b><span class="pill verify">FSSAI declared</span></div><div class="muted">C-203 · Daily / monthly meal plans · Vegetarian</div><button class="btn full" onclick="toast('Meal plans opened')">View plans</button></div>
+<div class="card"><b>Want to list your home business?</b><div class="muted">Food businesses need an FSSAI registration/license number — you'll add it during submission. Admin approval required before you go live.</div><button class="btn secondary full" onclick="toast('Business submission started: details → FSSAI number → admin approval')">+ List my business</button></div>
+<div class="fine">Padosi facilitates these listings between neighbours; sellers are responsible for food safety, licensing and order fulfilment.</div></section>
+
+<section id="profile" class="view"><div class="hello">Profile</div><div class="muted">Green Valley Heights · Tower B</div><div class="card" style="text-align:center"><div style="font-size:42px">👤</div><b>Akash</b><div class="muted">Resident · Helpful Member</div></div>
+<div class="section">Administration</div><div class="card"><div class="row"><b>Role</b><span class="pill">Resident</span></div><div class="muted">Authorized admin accounts see their relevant dashboard.</div><button class="btn full secondary" onclick="go('admin')">Demo Society Admin</button><button class="btn full secondary" onclick="go('super')">Demo Super Admin</button></div>
+<div class="section">Legal & support</div><div class="card"><div class="row"><b>Community guidelines</b><span>›</span></div></div>
+<div class="card"><div class="row"><b>Report a problem / contact Grievance Officer</b><span>›</span></div></div>
+<div class="card"><div class="row"><b>Privacy policy & data</b><span>›</span></div></div></section>
+
+<section id="admin" class="view"><div class="hello">Society Admin</div><div class="muted">Green Valley Heights · Committee dashboard</div>
+<div class="section">At a glance</div><div class="grid"><div class="tile"><div class="metric">482</div><small>Residents</small></div><div class="tile"><div class="metric">17</div><small>Open issues</small></div><div class="tile"><div class="metric">₹8.4L</div><small>Monthly funds</small></div><div class="tile"><div class="metric">6</div><small>Overdue actions</small></div></div>
+<div class="section">Resident requests</div><div class="card"><b>Rohan Mehta · B-904</b><div class="muted">Proof of residence submitted</div><button class="btn" onclick="approve(this)">Accept</button> <button class="btn danger" onclick="reject(this)">Reject</button></div>
+<div class="section">Weekly meeting actions</div><div class="card"><div class="row"><b>🛗 Lift B2</b><span class="pill gold">Due 30 Aug</span></div><div class="muted">Owner: Maintenance Committee · Next: vendor repair</div><button class="btn secondary full" onclick="toast('Owner changed')">Assign / change owner</button></div>
+<div class="card"><div class="row"><b>💧 Tank cleaning</b><span class="pill">Due 31 Aug</span></div><div class="muted">Owner: Facilities Lead · Next: confirm vendor</div></div>
+<div class="section">Community business approvals</div><div class="card"><b>🍱 New resident mess — Priya C-702</b><div class="muted">Menu + FSSAI declaration submitted</div><button class="btn" onclick="approve(this)">Approve</button> <button class="btn danger" onclick="reject(this)">Reject</button></div>
+<div class="section">Nearby promotions</div><div class="card"><div class="row"><b>Allow sponsored professional activities</b><div class="switch on" onclick="toggle(this)"><div class="knob"></div></div></div><div class="muted">If OFF, residents won't see nearby professional activity promotions.</div></div>
+<div class="section">💰 Maintenance funds</div><div class="card"><div class="row"><div><div class="money">₹42.6L</div><div class="muted">Current maintenance balance</div></div><span class="pill">Reconciled</span></div><div class="bar"><i style="width:64%"></i></div><div class="muted">Monthly collection ₹8.4L · Expenses ₹5.7L · Reserve ₹12.2L</div><div class="fine">Figures entered & certified by the Treasurer. Padosi displays these records but does not audit them.</div><button class="btn full" onclick="go('funds')">Open funds dashboard</button></div>
+</section>
+
+<section id="funds" class="view"><div class="hello">Maintenance Funds</div><div class="muted">Visibility creates accountability — not blame.</div><div class="grid">
+<div class="tile"><div class="metric">₹42.6L</div><small>Balance</small></div><div class="tile"><div class="metric">₹8.4L</div><small>Collected this month</small></div><div class="tile"><div class="metric">₹5.7L</div><small>Spent this month</small></div><div class="tile"><div class="metric">₹12.2L</div><small>Reserve</small></div></div>
+<div class="section">Monthly summary</div><div class="card"><div class="row"><b>Maintenance collections</b><b class="ok">₹8,40,000</b></div><div class="row"><span class="muted">Lift AMC</span><span>₹1,20,000</span></div><div class="row"><span class="muted">Security</span><span>₹1,85,000</span></div><div class="row"><span class="muted">Housekeeping</span><span>₹1,40,000</span></div><div class="row"><span class="muted">Electricity/common areas</span><span>₹1,05,000</span></div><div class="row"><span class="muted">Other approved expenses</span><span>₹1,50,000</span></div></div>
+<div class="section">Accountability controls</div><div class="card"><div class="row"><b>Expense approval</b><span class="pill">2 approvals</span></div><div class="muted">Every expense has category, invoice/reference, approver and date.</div></div>
+<div class="card"><div class="row"><b>Open financial items</b><span class="pill gold">3</span></div><div class="muted">Invoices pending upload · Vendor reconciliation · Reserve allocation</div></div>
+<div class="fine">Figures on this page are entered and certified by the Society Treasurer (Suresh K., B-1102). Padosi displays these records for transparency but does not independently audit or guarantee their accuracy.</div>
+<button class="btn full" onclick="toast('Monthly statement export prepared')">Export monthly statement</button></section>
+
+<section id="gate" class="view"><div class="hello">Gate & Visitors</div><div class="muted">Pre-approve entries and reach security fast — no phone tag with the guard.</div>
+<div class="card"><b>Pre-approve a visitor</b><div class="muted">Guard sees the name, photo and expected time — no calls needed.</div><button class="btn full" onclick="preApprove()">+ Pre-approve visitor</button></div>
+<div class="section">Expected today</div>
+<div class="card"><div class="row"><b>📦 Amazon delivery</b><span class="pill">Approved</span></div><div class="muted">Expected 2–4 PM · Main gate</div></div>
+<div class="card"><div class="row"><b>👨‍🔧 Ramesh · Plumber</b><span class="pill">Approved</span></div><div class="muted">Expected 5 PM · Called in by A-201</div></div>
+<div class="section">Emergency</div>
+<div class="card" style="text-align:center"><button class="btn danger full" onclick="toast('SOS sent — Security & Society Admin alerted with your flat number and location')">🚨 SOS — Alert Security</button><div class="fine">Sends your flat number and a live alert to the on-duty guard and Society Admin.</div></div>
+</section>
+
+<section id="super" class="view"><div class="hello">Padosi Super Admin</div><div class="muted">Platform-wide control — not society-level control.</div><div class="section">Platform</div><div class="grid"><div class="tile"><div class="metric">24</div><small>Societies</small></div><div class="tile"><div class="metric">8,420</div><small>Residents</small></div><div class="tile"><div class="metric">186</div><small>Activities</small></div><div class="tile"><div class="metric">312</div><small>Service listings</small></div></div>
+<div class="section">Societies</div><button class="btn full" onclick="createSociety()">+ Create Society</button>
+<div class="card"><div class="row"><b>Green Valley Heights</b><span class="pill">Active</span></div><div class="muted">482 residents · 3 admins</div><button class="btn secondary full" onclick="toast('Society admins opened')">Manage admins</button></div>
+<div class="card"><div class="row"><b>Palm Residency</b><span class="pill">Active</span></div><div class="muted">326 residents · 2 admins</div><button class="btn secondary full" onclick="toast('Society details opened')">Open society</button></div>
+<div class="section">Paid activity approvals</div><div class="card"><b>🎹 Piano Basics for Kids — Meera, B-604</b><div class="muted">Green Valley Heights · ₹350/session · Ages 6+</div><button class="btn" onclick="approve(this)">Approve</button> <button class="btn danger" onclick="reject(this)">Reject</button></div>
+<div class="section">Global controls</div><div class="card"><b>Roles & permissions</b><div class="muted">Super Admin → Society Admin → Resident. Paid activities are approved here (platform-wide safety & pricing checks); resident businesses and issues stay with the Society Admin.</div></div>
+<div class="card"><b>Safety & moderation</b><div class="muted">Manage reports, abuse, suspended accounts and platform-level policy.</div></div>
+<div class="card"><div class="row"><b>Grievance Officer</b><span class="pill">Published</span></div><div class="muted">Designated contact & response-time tracking for content/takedown complaints, per IT Rules, 2021.</div></div></section>
+
+
+<section id="needhelp" class="view">
+<div class="hello">Need Help</div>
+<div class="muted">What do you need help with?</div>
+<div class="grid" style="margin-top:12px">
+<div class="tile" onclick="newRequest('Plumbing')"><div class="ico">💧</div><b>Plumbing</b><small>Leaks & repairs</small></div>
+<div class="tile" onclick="newRequest('Electrical')"><div class="ico">⚡</div><b>Electrical</b><small>Power & wiring</small></div>
+<div class="tile" onclick="newRequest('AC Repair')"><div class="ico">❄️</div><b>AC Repair</b><small>Cooling issues</small></div>
+<div class="tile" onclick="newRequest('Cleaning')"><div class="ico">✨</div><b>Cleaning</b><small>Home & deep clean</small></div>
+<div class="tile" onclick="newRequest('Pest Control')"><div class="ico">🐜</div><b>Pest Control</b><small>Home treatment</small></div>
+<div class="tile" onclick="newRequest('Car Wash')"><div class="ico">🚗</div><b>Car Wash</b><small>Wash & detailing</small></div>
+<div class="tile" onclick="newRequest('Tutor')"><div class="ico">🎓</div><b>Tutor</b><small>School & skills</small></div>
+<div class="tile" onclick="newRequest('Babysitting')"><div class="ico">😊</div><b>Babysitting</b><small>Trusted help</small></div>
+<div class="tile" onclick="newRequest('Domestic Help')"><div class="ico">🏠</div><b>Domestic Help</b><small>Maid & cook</small></div>
+<div class="tile" onclick="newRequest('Moving')"><div class="ico">📦</div><b>Moving</b><small>Shifting support</small></div>
+<div class="tile" onclick="newRequest('Tech Help')"><div class="ico">💻</div><b>Tech Help</b><small>Device support</small></div>
+<div class="tile" onclick="newRequest('Other')"><div class="ico">•••</div><b>Other</b><small>Something else</small></div>
+</div>
+</section>
+
+<section id="request" class="view">
+<div class="hello">New Request</div>
+<div class="muted" id="requestCategory">Service request</div>
+<div class="card" style="margin-top:14px">
+<b>Tell us what you need</b>
+<input id="requestText" class="input" placeholder="Describe the issue or requirement...">
+<div class="section">Preferred time</div>
+<div class="tabs"><button class="sel" onclick="selectTime(this)">Today</button><button onclick="selectTime(this)">Tomorrow</button><button onclick="selectTime(this)">Flexible</button></div>
+<button class="btn full" onclick="submitRequest()">Submit Request</button>
+<div class="fine">Your request can be routed to trusted providers and tracked with an owner, status and next action.</div>
+</div>
+</section>
+
+</main>
+<div class="nav"><button class="active" data-v="home" onclick="go('home')"><span>🏠</span>Home</button><button data-v="resolve" onclick="go('resolve')"><span>🏢</span>Resolve</button><button data-v="activities" onclick="go('activities')"><span>🎯</span>Activities</button><button data-v="services" onclick="go('services')"><span>🛠️</span>Services</button><button data-v="profile" onclick="go('profile')"><span>👤</span>Profile</button></div>
+<div id="toast" class="toast"></div>
+<script>
+function go(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.v===id));scrollTo(0,0)}
+function toast(t){let x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.t);window.t=setTimeout(()=>x.style.display='none',1900)}
+function join(b){b.textContent='Joined ✓';b.classList.add('secondary');toast('Joined successfully')}
+function tab(id,b){document.getElementById('mine').style.display=id==='mine'?'block':'none';document.getElementById('nearby').style.display=id==='nearby'?'block':'none';b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')}
+function approve(b){b.parentElement.style.opacity='.45';toast('Approved')}
+function reject(b){b.parentElement.style.opacity='.45';toast('Rejected')}
+function toggle(x){x.classList.toggle('on');toast(x.classList.contains('on')?'Enabled':'Disabled')}
+function report(){let x=prompt('Issue title');if(x)toast('Issue created: '+x)}
+function createSociety(){let n=prompt('Society name');if(n){toast('Society created: '+n+' — assign Society Admin next')}}
+function createGroup(){let n=prompt('Group name (e.g. "Block C Parents")');if(n)toast('Group created: '+n)}
+function addContact(){let n=prompt('Name & service (e.g. "Ramesh, Plumber, 98xxxxxxx")');if(n)toast('Added — visible to your society only')}
+
+function newRequest(category){
+  document.getElementById('requestCategory').textContent=category+' request';
+  document.getElementById('requestText').value='';
+  go('request');
+}
+function selectTime(b){
+  b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+  b.classList.add('sel');
+}
+function submitRequest(){
+  let text=document.getElementById('requestText').value.trim();
+  if(!text){toast('Please describe what you need');return}
+  toast('Request submitted — you can track its status');
+  setTimeout(()=>go('resolve'),500);
+}
+function preApprove(){let n=prompt('Visitor name');if(n)toast('Visitor pre-approved: '+n+' — entry code sent to guard')}
+</script></div></body></html>

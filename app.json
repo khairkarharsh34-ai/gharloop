@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Padosi",
+    "slug": "padosi",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gharloop.padosi"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#245c43",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.gharloop.padosi"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single",
+      "name": "Padosi",
+      "shortName": "Padosi",
+      "themeColor": "#245c43",
+      "backgroundColor": "#f5f7f4"
+    },
+    "scheme": "padosi",
+    "backgroundColor": "#f5f7f4",
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
