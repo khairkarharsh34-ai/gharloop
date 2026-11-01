@@ -1,8 +1,9 @@
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Avatar } from '@/components/Avatar';
 import { Button } from '@/components/Button';
-import { Card, Row } from '@/components/Card';
+import { Card, Divider } from '@/components/Card';
 import { HomeDetailsForm } from '@/components/HomeDetailsForm';
 import { JoinRequests } from '@/components/JoinRequests';
 import { LinkRow } from '@/components/LinkRow';
@@ -11,9 +12,10 @@ import { Screen } from '@/components/Screen';
 import { Section } from '@/components/Section';
 import { ErrorState, Loading } from '@/components/States';
 import { useToast } from '@/components/Toast';
-import { Bold, Hello, Muted } from '@/components/Typography';
+import { Fine } from '@/components/Typography';
 import { signOut } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
+import { colors } from '@/lib/theme';
 import { isAdmin, roleLabel } from '@/lib/types';
 
 export default function ProfileTab() {
@@ -38,42 +40,45 @@ export default function ProfileTab() {
     }
   }
 
-  if (error) return <Screen onRefresh={reload} refreshing={refreshing}><ErrorState message={error} onRetry={reload} /></Screen>;
+  if (error)
+    return (
+      <Screen title="Profile" onRefresh={reload} refreshing={refreshing}>
+        <ErrorState message={error} onRetry={reload} />
+      </Screen>
+    );
   if (!profile) return <Loading />;
 
-  const home = [profile.tower && `Tower ${profile.tower}`, profile.flat && `Flat ${profile.flat}`].filter(Boolean).join(' · ');
+  const flat = [profile.tower, profile.flat].filter(Boolean).join('-');
 
   return (
-    <Screen onRefresh={reload} refreshing={refreshing}>
-      <Hello>Profile</Hello>
-      <Muted>{[profile.society?.name, home].filter(Boolean).join(' · ') || 'Padosi'}</Muted>
-
+    <Screen title="Profile" onRefresh={reload} refreshing={refreshing}>
       <Card style={s.me}>
-        <Text style={s.avatar}>👤</Text>
-        <Bold>{profile.full_name || 'Your name'}</Bold>
-        <Muted>{roleLabel[profile.role]} · {session?.user.email}</Muted>
+        <Avatar name={profile.full_name || '?'} size={76} />
+        <Text style={s.name}>{profile.full_name || 'Your name'}</Text>
+        <Text style={s.email}>{session?.user.email}</Text>
+        <View style={s.chips}>
+          <Pill label={roleLabel[profile.role]} />
+          {flat ? <Pill label={`🏠 ${flat}`} tone="grey" /> : null}
+          {profile.society ? <Pill label={profile.society.name} tone="grey" /> : null}
+        </View>
       </Card>
 
-      <Section title="Your details" />
+      <Section title="Your details" action={editing ? undefined : { label: 'Edit', onPress: () => setEditing(true) }} />
       <Card>
         {editing ? (
-          <HomeDetailsForm profile={profile} onSaved={() => { setEditing(false); refresh(); }} />
+          <>
+            <HomeDetailsForm profile={profile} onSaved={() => { setEditing(false); refresh(); }} />
+            <Button title="Cancel" variant="ghost" onPress={() => setEditing(false)} full style={{ marginTop: 4 }} />
+          </>
         ) : (
           <>
-            <Muted>Phone: {profile.phone || 'Not added'}</Muted>
-            <Muted>Home: {home || 'Not added'}</Muted>
-            <Button title="Edit details" variant="secondary" onPress={() => setEditing(true)} full />
+            <Detail label="Phone" value={profile.phone} />
+            <Divider />
+            <Detail label="Tower / Wing" value={profile.tower} />
+            <Divider />
+            <Detail label="Flat" value={profile.flat} />
           </>
         )}
-      </Card>
-
-      <Section title="Administration" />
-      <Card>
-        <Row>
-          <Bold>Role</Bold>
-          <Pill label={roleLabel[profile.role]} />
-        </Row>
-        <Muted>Authorized admin accounts see their relevant dashboard.</Muted>
       </Card>
 
       {isAdmin(profile.role) ? (
@@ -83,17 +88,35 @@ export default function ProfileTab() {
         </>
       ) : null}
 
-      <Section title="Legal & support" />
-      <LinkRow title="Community guidelines" onPress={() => router.push('/module/guidelines')} />
-      <LinkRow title="Report a problem / contact Grievance Officer" onPress={() => router.push('/module/grievance')} />
-      <LinkRow title="Privacy policy & data" onPress={() => router.push('/module/privacy')} />
+      <Section title="Help & legal" />
+      <Card style={s.list}>
+        <LinkRow icon="📘" tint="blue" title="Community guidelines" onPress={() => router.push('/module/guidelines')} />
+        <LinkRow icon="📮" tint="rose" title="Report a problem" subtitle="Contact the Grievance Officer" onPress={() => router.push('/module/grievance')} />
+        <LinkRow icon="🔒" tint="slate" title="Privacy & data" onPress={() => router.push('/module/privacy')} last />
+      </Card>
 
       <Button title="Sign out" variant="danger" onPress={logout} full />
+      <Fine>Padosi · version 1.0</Fine>
     </Screen>
   );
 }
 
+function Detail({ label, value }: { label: string; value: string | null }) {
+  return (
+    <View style={s.detail}>
+      <Text style={s.detailLabel}>{label}</Text>
+      <Text style={[s.detailValue, !value && { color: colors.faint }]}>{value || 'Not added'}</Text>
+    </View>
+  );
+}
+
 const s = StyleSheet.create({
-  me: { alignItems: 'center', marginTop: 14 },
-  avatar: { fontSize: 42 },
+  me: { alignItems: 'center', paddingVertical: 26 },
+  name: { fontSize: 22, fontWeight: '800', color: colors.ink, marginTop: 14, letterSpacing: -0.4 },
+  email: { fontSize: 13, color: colors.muted, marginTop: 3 },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginTop: 14 },
+  list: { paddingVertical: 4 },
+  detail: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  detailLabel: { fontSize: 14, color: colors.muted },
+  detailValue: { fontSize: 15, fontWeight: '600', color: colors.ink },
 });

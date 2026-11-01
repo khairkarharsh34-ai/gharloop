@@ -1,48 +1,66 @@
+import { router } from 'expo-router';
 import type { ReactNode } from 'react';
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/lib/theme';
 
 type Props = {
   children: ReactNode;
+  title?: string;
+  subtitle?: string;
+  /** Show a "‹ Back" link above the title. */
+  back?: boolean;
+  /** Element on the right of the title, e.g. an avatar. */
+  right?: ReactNode;
   refreshing?: boolean;
   onRefresh?: () => void;
-  /** Hide the white "Padosi" header (used on login screens). */
-  bare?: boolean;
+  /** No side padding or top inset (for screens with a full-bleed hero). */
+  bleed?: boolean;
 };
 
-/** Standard page: sticky Padosi header + scrolling content with pull-to-refresh. */
-export function Screen({ children, refreshing = false, onRefresh, bare }: Props) {
+/** Standard page: big title, scrolling content, pull-to-refresh. */
+export function Screen({ children, title, subtitle, back, right, refreshing = false, onRefresh, bleed }: Props) {
   const insets = useSafeAreaInsets();
+  const goBack = () => (router.canGoBack() ? router.back() : router.replace('/'));
   return (
-    <View style={[s.page, { paddingTop: insets.top }]}>
-      {bare ? null : <AppHeader />}
+    <View style={s.page}>
       <ScrollView
-        contentContainerStyle={s.content}
+        contentContainerStyle={[bleed ? s.bleed : s.content, !bleed && { paddingTop: insets.top + 18 }]}
         keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
         refreshControl={
-          onRefresh ? <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.green} colors={[colors.green]} /> : undefined
+          onRefresh ? (
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.green} colors={[colors.green]} />
+          ) : undefined
         }
       >
+        {back ? (
+          <Pressable onPress={goBack} hitSlop={10} style={s.back}>
+            <Text style={s.backText}>‹  Back</Text>
+          </Pressable>
+        ) : null}
+        {title ? (
+          <View style={s.head}>
+            <View style={{ flex: 1 }}>
+              <Text style={s.title}>{title}</Text>
+              {subtitle ? <Text style={s.subtitle}>{subtitle}</Text> : null}
+            </View>
+            {right}
+          </View>
+        ) : null}
         {children}
       </ScrollView>
     </View>
   );
 }
 
-export function AppHeader() {
-  return (
-    <View style={s.header}>
-      <Text style={s.brand}>Padosi</Text>
-      <Text style={s.tag}>Your community, made useful — and happier.</Text>
-    </View>
-  );
-}
-
 const s = StyleSheet.create({
   page: { flex: 1, backgroundColor: colors.bg },
-  header: { backgroundColor: colors.white, padding: 19, borderBottomWidth: 1, borderBottomColor: colors.line },
-  brand: { fontSize: 25, fontWeight: '900', color: colors.ink },
-  tag: { fontSize: 11, color: colors.muted },
-  content: { paddingTop: 16, paddingHorizontal: 15, paddingBottom: 32 },
+  content: { paddingHorizontal: 18, paddingBottom: 40 },
+  bleed: { paddingBottom: 40 },
+  back: { alignSelf: 'flex-start', marginBottom: 14, paddingVertical: 4 },
+  backText: { color: colors.green, fontWeight: '700', fontSize: 15 },
+  head: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 18 },
+  title: { fontSize: 30, fontWeight: '800', color: colors.ink, letterSpacing: -0.8 },
+  subtitle: { fontSize: 14, color: colors.muted, marginTop: 4, lineHeight: 20 },
 });

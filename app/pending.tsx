@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/Button';
-import { Card, Row } from '@/components/Card';
+import { Card } from '@/components/Card';
 import { HomeDetailsForm } from '@/components/HomeDetailsForm';
-import { Pill } from '@/components/Pill';
 import { Screen } from '@/components/Screen';
 import { ErrorState, Loading } from '@/components/States';
+import { StepHeader } from '@/components/StepHeader';
+import { Steps } from '@/components/Steps';
 import { useToast } from '@/components/Toast';
-import { Bold, Fine, Hello, Muted } from '@/components/Typography';
+import { Fine, Muted } from '@/components/Typography';
 import { signOut } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 
@@ -32,51 +33,52 @@ export default function Pending() {
 
   if (error) {
     return (
-      <Screen onRefresh={reload} refreshing={refreshing}>
+      <Screen title="Hmm…" onRefresh={reload} refreshing={refreshing}>
         <ErrorState message={error} onRetry={reload} />
-        <Button title="Sign out" variant="danger" onPress={logout} full />
+        <Button title="Sign out" variant="ghost" onPress={logout} full />
       </Screen>
     );
   }
   if (!profile) return <Loading label="Setting up your profile…" />;
 
+  const first = profile.full_name.split(' ')[0] || 'neighbour';
   const waiting = profile.status === 'pending' && profile.society_id;
   const rejected = profile.status === 'rejected';
+  const flat = [profile.tower, profile.flat].filter(Boolean).join('-');
 
   return (
-    <Screen onRefresh={reload} refreshing={refreshing}>
-      <Hello>Welcome, {profile.full_name.split(' ')[0] || 'neighbour'} 👋</Hello>
-      <Muted>{profile.society ? `${profile.society.name} · ${profile.society.city}` : 'Choose your society to continue'}</Muted>
-
+    <Screen
+      title={waiting ? `Almost there, ${first}` : `Hi ${first} 👋`}
+      subtitle={waiting ? 'Your society needs to confirm you live there.' : 'Tell us where you live to get started.'}
+      onRefresh={reload}
+      refreshing={refreshing}
+    >
       {waiting ? (
-        <Card style={{ marginTop: 16 }}>
-          <Row>
-            <Bold>⏳ Waiting for approval</Bold>
-            <Pill label="Pending" tone="gold" />
-          </Row>
-          <Muted>
-            Your Society Admin will check your details ({[profile.tower, profile.flat].filter(Boolean).join('-') || 'flat not set'})
-            and approve you. Pull down or tap below to check again.
-          </Muted>
-          <Button title="Check again" onPress={reload} loading={refreshing} full />
+        <Card style={{ padding: 20 }}>
+          <Steps
+            steps={[
+              { title: 'Account created', state: 'done' },
+              { title: 'Request sent', detail: [profile.society?.name, flat].filter(Boolean).join(' · '), state: 'done' },
+              { title: 'Society Admin approval', detail: 'Usually within a day. Pull down to check.', state: 'current' },
+              { title: 'Welcome to your community', state: 'todo' },
+            ]}
+          />
+          <Button title="Check again" onPress={reload} loading={refreshing} full style={{ marginTop: 0 }} />
         </Card>
       ) : (
-        <Card style={{ marginTop: 16 }}>
-          <Row>
-            <Bold>{rejected ? 'Request not approved' : 'Choose your society'}</Bold>
-            {rejected ? <Pill label="Rejected" tone="red" /> : null}
-          </Row>
-          <Muted>
-            {rejected
-              ? 'Your Society Admin could not verify these details. Correct them and send the request again.'
-              : 'Pick your society and add your flat so the admin can approve you.'}
-          </Muted>
+        <Card style={{ padding: 20 }}>
+          <StepHeader
+            n={1}
+            title={rejected ? 'Request not approved' : 'Choose your society'}
+            hint={rejected ? 'Check your details and send again' : 'Your admin will approve you'}
+          />
+          {rejected ? <Muted style={{ marginTop: 10 }}>Your Society Admin could not verify these details.</Muted> : null}
           <HomeDetailsForm profile={profile} chooseSociety saveLabel="Send join request" onSaved={refresh} />
         </Card>
       )}
 
-      <Button title="Sign out" variant="danger" onPress={logout} full />
-      <Fine>Only verified residents can see neighbours, announcements and society data.</Fine>
+      <Button title="Sign out" variant="ghost" onPress={logout} full />
+      <Fine>Only verified residents can see neighbours, notices and society data.</Fine>
     </Screen>
   );
 }

@@ -1,27 +1,44 @@
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 import { colors, radius } from '@/lib/theme';
 
 type Props = TextInputProps & { label?: string };
 
-export function Input({ label, style, ...rest }: Props) {
+export function Input({ label, style, onFocus, onBlur, ...rest }: Props) {
+  const [focused, setFocused] = useState(false);
   return (
     <View style={s.wrap}>
       {label ? <Text style={s.label}>{label}</Text> : null}
-      <TextInput placeholderTextColor={colors.muted} style={[s.input, style]} {...rest} />
+      <TextInput
+        placeholderTextColor={colors.faint}
+        style={[s.input, focused && s.focused, style]}
+        onFocus={(e) => {
+          setFocused(true);
+          onFocus?.(e);
+        }}
+        onBlur={(e) => {
+          setFocused(false);
+          onBlur?.(e);
+        }}
+        {...rest}
+      />
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  wrap: { marginTop: 10 },
-  label: { fontSize: 11, fontWeight: '700', color: colors.muted, marginBottom: 4, marginLeft: 2 },
+  wrap: { marginTop: 14 },
+  label: { fontSize: 13, fontWeight: '600', color: colors.ink2, marginBottom: 6, marginLeft: 2 },
   input: {
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: colors.line,
-    borderRadius: radius.button,
-    padding: 11,
-    fontSize: 14,
+    borderRadius: radius.field,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
+    fontSize: 15,
     color: colors.ink,
-    backgroundColor: colors.white,
+    backgroundColor: colors.field,
+    outlineStyle: 'none' as never,
   },
+  focused: { borderColor: colors.green, backgroundColor: colors.white },
 });

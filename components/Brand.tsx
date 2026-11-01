@@ -1,20 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '@/lib/theme';
+import { Hero } from './Hero';
+import { Logo } from './Logo';
 
-/** Large logo block for the login and sign-up screens. */
-export function Brand() {
+/** Green welcome panel at the top of the login and sign-up screens. */
+export function Brand({ title, subtitle }: { title: string; subtitle: string }) {
+  const insets = useSafeAreaInsets();
   return (
-    <View style={s.wrap}>
-      <Text style={s.logo}>🏡</Text>
-      <Text style={s.brand}>Padosi</Text>
-      <Text style={s.tag}>Your community, made useful — and happier.</Text>
-    </View>
+    <Hero style={[s.hero, { paddingTop: insets.top + 34 }]}>
+      <Logo />
+      <Text style={s.title}>{title}</Text>
+      <Text style={s.subtitle}>{subtitle}</Text>
+    </Hero>
   );
 }
 
 const s = StyleSheet.create({
-  wrap: { alignItems: 'center', marginTop: 30, marginBottom: 18 },
-  logo: { fontSize: 44 },
-  brand: { fontSize: 30, fontWeight: '900', color: colors.ink, marginTop: 4 },
-  tag: { fontSize: 12, color: colors.muted, marginTop: 2 },
+  hero: { paddingHorizontal: 24, paddingBottom: 64, borderBottomLeftRadius: 32, borderBottomRightRadius: 32 },
+  title: { color: colors.white, fontSize: 30, fontWeight: '800', marginTop: 36, letterSpacing: -0.8, lineHeight: 36 },
+  subtitle: { color: 'rgba(255,255,255,0.78)', fontSize: 15, marginTop: 8, lineHeight: 22 },
 });

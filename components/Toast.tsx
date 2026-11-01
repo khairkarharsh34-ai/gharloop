@@ -2,7 +2,7 @@ import { createContext, useCallback, useContext, useRef, useState, type ReactNod
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '@/lib/theme';
 
-// Small dark message above the tab bar (same as the prototype's toast).
+// Small dark message above the tab bar.
 // Used instead of Alert because Alert does nothing in the web version.
 const ToastContext = createContext<(message: string) => void>(() => {});
 
@@ -13,7 +13,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const show = useCallback((m: string) => {
     setMessage(m);
     if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => setMessage(null), 2200);
+    timer.current = setTimeout(() => setMessage(null), 2400);
   }, []);
 
   return (
@@ -31,14 +31,15 @@ export function ToastProvider({ children }: { children: ReactNode }) {
 export const useToast = () => useContext(ToastContext);
 
 const s = StyleSheet.create({
-  wrap: { position: 'absolute', left: 16, right: 16, bottom: 96, alignItems: 'center' },
+  wrap: { position: 'absolute', left: 20, right: 20, bottom: 110, alignItems: 'center' },
   toast: {
     backgroundColor: colors.ink,
     color: colors.white,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 11,
-    fontSize: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    borderRadius: 14,
+    fontSize: 14,
+    fontWeight: '600',
     overflow: 'hidden',
     textAlign: 'center',
   },

@@ -26,19 +26,22 @@ export function SocietyPicker({ value, onChange }: Props) {
     load();
   }, [load]);
 
-  if (error) return <ErrorState message={error} onRetry={load} />;
+  if (error) return <View style={s.gap}><ErrorState message={error} onRetry={load} /></View>;
   if (!items) return <Loading label="Loading societies…" />;
   if (!items.length)
-    return <EmptyState icon="🏘️" title="No societies yet" text="Ask the Padosi team to add your society first." />;
+    return <View style={s.gap}><EmptyState icon="🏘️" title="No societies yet" text="Ask the Padosi team to add your society first." /></View>;
 
   return (
-    <View style={s.list}>
+    <View style={[s.gap, s.list]}>
       {items.map((soc) => {
         const on = soc.id === value;
         return (
           <Pressable key={soc.id} onPress={() => onChange(soc.id)} style={[s.item, on && s.on]}>
-            <Text style={[s.name, on && { color: colors.green }]}>{on ? '✓ ' : ''}{soc.name}</Text>
-            <Text style={s.city}>{soc.city}</Text>
+            <View style={[s.radio, on && s.radioOn]}>{on ? <View style={s.dot} /> : null}</View>
+            <View style={{ flex: 1 }}>
+              <Text style={s.name}>{soc.name}</Text>
+              <Text style={s.city}>{soc.city}</Text>
+            </View>
           </Pressable>
         );
       })}
@@ -47,9 +50,22 @@ export function SocietyPicker({ value, onChange }: Props) {
 }
 
 const s = StyleSheet.create({
-  list: { gap: 6, marginTop: 6 },
-  item: { borderWidth: 1, borderColor: colors.line, borderRadius: radius.button, padding: 11, backgroundColor: colors.white },
+  gap: { marginTop: 14 },
+  list: { gap: 8 },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    borderWidth: 1.5,
+    borderColor: colors.line,
+    borderRadius: radius.field,
+    padding: 14,
+    backgroundColor: colors.field,
+  },
   on: { borderColor: colors.green, backgroundColor: colors.soft },
-  name: { fontSize: 13, fontWeight: '800', color: colors.ink },
-  city: { fontSize: 11, color: colors.muted },
+  radio: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: colors.faint, alignItems: 'center', justifyContent: 'center' },
+  radioOn: { borderColor: colors.green },
+  dot: { width: 10, height: 10, borderRadius: 5, backgroundColor: colors.green },
+  name: { fontSize: 15, fontWeight: '700', color: colors.ink },
+  city: { fontSize: 12, color: colors.muted, marginTop: 1 },
 });

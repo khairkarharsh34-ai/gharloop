@@ -1,7 +1,8 @@
 # Project: Padosi (housing society community app, India)
 
 Android app for residents, guards and admins of a housing society.
-Design reference: /reference/prototype.html (copy its look exactly).
+Design: Padosi design system v2 (see `lib/theme.ts`). `reference/prototype.html` is the original
+feature reference only; the visual design has moved on from it.
 
 ## Stack
 - Expo (React Native, TypeScript, Expo Router)
@@ -11,10 +12,15 @@ Design reference: /reference/prototype.html (copy its look exactly).
 ## Roles
 resident, guard, society_admin, super_admin
 
-## Design tokens
-green #245c43, soft green #eaf3ed, ink #18211c, muted #69736b, background #f5f7f4,
-card white with 1px #e3e8e3 border, 17px radius, pill badges, bottom tabs:
-Home, Resolve, Community, Activities, Profile.
+## Design system (v2)
+- Colours: neem green #1d5c45 (primary), marigold #f2a33a (warm accent), cream background #f6f4ee,
+  ink #16211c, muted #6e7a73, white cards with hairline #ece9e1 border + soft shadow.
+- Shapes: 20px card radius, 14px buttons/inputs, pill badges, 50px tall buttons.
+- Each module has its own pastel tint (`tints` in lib/theme.ts) used for its icon chip.
+- Big bold page titles (30px), green hero panel with soft circles on Home and login screens.
+- Logo: marigold rounded square with "प" + "padosi" wordmark (components/Logo.tsx).
+- Bottom tabs: Home, Resolve, Community, Activities, Profile (active tab = soft green pill).
+- Module list (icons, tints, copy) lives in lib/modules.ts.
 
 ## Modules
 Resolve (issues with owner, deadline, status, proof photo), Community (announcements,

@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Screen } from '@/components/Screen';
 import { Loading } from '@/components/States';
 import { ToastProvider } from '@/components/Toast';
-import { Hello, Muted } from '@/components/Typography';
+import { Muted } from '@/components/Typography';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { isConfigured } from '@/lib/supabase';
 import { colors, maxWidth } from '@/lib/theme';
@@ -59,11 +59,10 @@ function Routes() {
 
 function MissingKeys() {
   return (
-    <Screen>
-      <Hello>Almost there</Hello>
+    <Screen title="Almost there" subtitle="The app isn't connected to its database yet.">
       <Muted>
-        Supabase keys are missing. Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY to the .env file (or
-        to your web host's environment variables), then restart.
+        Add EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY to the .env file (or to your web host's
+        environment variables), then restart or redeploy.
       </Muted>
     </Screen>
   );

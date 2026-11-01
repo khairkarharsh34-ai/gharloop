@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { listJoinRequests, setMemberStatus } from '@/lib/api';
+import { colors } from '@/lib/theme';
 import type { JoinRequest, Profile } from '@/lib/types';
+import { Avatar } from './Avatar';
 import { Button } from './Button';
 import { Card } from './Card';
+import { Pill } from './Pill';
 import { EmptyState, ErrorState, Loading } from './States';
 import { useToast } from './Toast';
-import { Bold, Muted } from './Typography';
 
 /** Pending residents an admin can accept or reject. `reloadKey` changes on pull-to-refresh. */
 export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number }) {
@@ -36,7 +38,7 @@ export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number
     try {
       await setMemberStatus(id, accept ? 'approved' : 'rejected');
       setItems((list) => list?.filter((r) => r.id !== id) ?? null);
-      toast(accept ? 'Resident approved' : 'Request rejected');
+      toast(accept ? 'Resident approved 🎉' : 'Request rejected');
     } catch (e) {
       toast((e as Error).message);
     } finally {
@@ -46,30 +48,39 @@ export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number
 
   if (error) return <ErrorState message={error} onRetry={load} />;
   if (!items) return <Loading label="Loading requests…" />;
-  if (!items.length) return <EmptyState icon="✅" title="No pending requests" text="New residents waiting for approval show up here." />;
+  if (!items.length)
+    return <EmptyState icon="✅" title="All caught up" text="New residents waiting for approval will show up here." />;
 
   return (
     <View>
-      {items.map((r) => (
-        <Card key={r.id}>
-          <Bold>
-            {r.full_name || 'Unnamed'} · {[r.tower, r.flat].filter(Boolean).join('-') || 'No flat'}
-          </Bold>
-          <Muted>
-            {[me.role === 'super_admin' ? r.society?.name : null, r.phone, `Requested ${new Date(r.created_at).toLocaleDateString('en-IN')}`]
-              .filter(Boolean)
-              .join(' · ')}
-          </Muted>
-          <View style={s.actions}>
-            <Button title="Accept" onPress={() => decide(r.id, true)} loading={busyId === r.id} disabled={!!busyId} />
-            <Button title="Reject" variant="danger" onPress={() => decide(r.id, false)} disabled={!!busyId} />
-          </View>
-        </Card>
-      ))}
+      {items.map((r) => {
+        const flat = [r.tower, r.flat].filter(Boolean).join('-');
+        const meta = [me.role === 'super_admin' ? r.society?.name : null, r.phone, `Asked ${new Date(r.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`];
+        return (
+          <Card key={r.id}>
+            <View style={s.top}>
+              <Avatar name={r.full_name || '?'} />
+              <View style={{ flex: 1 }}>
+                <Text style={s.name}>{r.full_name || 'Unnamed'}</Text>
+                <Text style={s.meta}>{meta.filter(Boolean).join(' · ')}</Text>
+              </View>
+              {flat ? <Pill label={flat} tone="blue" /> : null}
+            </View>
+            <View style={s.actions}>
+              <Button title="Reject" variant="danger" small onPress={() => decide(r.id, false)} disabled={!!busyId} style={s.flex} />
+              <Button title="Approve" small onPress={() => decide(r.id, true)} loading={busyId === r.id} disabled={!!busyId} style={s.flex} />
+            </View>
+          </Card>
+        );
+      })}
     </View>
   );
 }
 
 const s = StyleSheet.create({
-  actions: { flexDirection: 'row', gap: 6, marginTop: 9 },
+  top: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  name: { fontSize: 16, fontWeight: '700', color: colors.ink },
+  meta: { fontSize: 12, color: colors.muted, marginTop: 2 },
+  actions: { flexDirection: 'row', gap: 10, marginTop: 14 },
+  flex: { flex: 1 },
 });

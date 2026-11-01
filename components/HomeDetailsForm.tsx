@@ -73,7 +73,7 @@ export function HomeDetailsForm({ profile, chooseSociety, saveLabel = 'Save deta
 }
 
 const s = StyleSheet.create({
-  two: { flexDirection: 'row', gap: 9 },
+  two: { flexDirection: 'row', gap: 12 },
   half: { flex: 1 },
-  error: { color: colors.red, fontSize: 12, marginTop: 10 },
+  error: { color: colors.red, fontSize: 13, marginTop: 12 },
 });

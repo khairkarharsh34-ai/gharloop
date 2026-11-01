@@ -1,14 +1,19 @@
 import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors, radius } from '@/lib/theme';
+import { colors, radius, shadow, type Tint } from '@/lib/theme';
+import { IconChip } from './IconChip';
 
-type Props = { icon?: string; title: string; subtitle?: string; onPress?: () => void };
+type Props = { icon: string; tint?: Tint; title: string; subtitle?: string; onPress?: () => void };
 
-/** Square-ish card used in the two-column grid on Home, Need Help, etc. */
-export function Tile({ icon, title, subtitle, onPress }: Props) {
+/** Module card for the two-column grid. */
+export function Tile({ icon, tint, title, subtitle, onPress }: Props) {
   return (
-    <Pressable onPress={onPress} disabled={!onPress} style={({ pressed }) => [s.tile, pressed && { opacity: 0.75 }]}>
-      {icon ? <Text style={s.icon}>{icon}</Text> : null}
+    <Pressable
+      onPress={onPress}
+      disabled={!onPress}
+      style={({ pressed }) => [s.tile, { transform: [{ scale: pressed ? 0.97 : 1 }] }]}
+    >
+      <IconChip icon={icon} tint={tint} />
       <Text style={s.title}>{title}</Text>
       {subtitle ? <Text style={s.sub}>{subtitle}</Text> : null}
     </Pressable>
@@ -21,16 +26,17 @@ export function Grid({ children }: { children: ReactNode }) {
 }
 
 const s = StyleSheet.create({
-  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: 9 },
+  grid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', rowGap: 12 },
   tile: {
     backgroundColor: colors.card,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.line,
     borderRadius: radius.card,
-    padding: 14,
-    width: '48.7%', // two columns with a ~9px gap, like the prototype
+    padding: 16,
+    width: '48.3%',
+    minHeight: 132,
+    ...shadow,
   },
-  icon: { fontSize: 24 },
-  title: { fontSize: 14, fontWeight: '700', color: colors.ink, marginTop: 6 },
-  sub: { fontSize: 10, color: colors.muted, marginTop: 2 },
+  title: { fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 14, letterSpacing: -0.2 },
+  sub: { fontSize: 12, color: colors.muted, marginTop: 3, lineHeight: 16 },
 });

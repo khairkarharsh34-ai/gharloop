@@ -1,25 +1,59 @@
-// Design tokens copied from reference/prototype.html
+import { Platform, type ViewStyle } from 'react-native';
+
+// Padosi design system v2: deep "neem" green for trust,
+// marigold for warmth, and a soft cream background instead of cold grey.
 export const colors = {
-  green: '#245c43',
-  soft: '#eaf3ed',
-  ink: '#18211c',
-  muted: '#69736b',
-  bg: '#f5f7f4',
+  // Brand
+  green: '#1d5c45', // primary: buttons, active tab, hero
+  greenDark: '#143f30',
+  soft: '#e4f1ea', // light green fills
+  marigold: '#f2a33a', // warm accent
+  marigoldSoft: '#fff2dc',
+
+  // Text
+  ink: '#16211c',
+  ink2: '#3b4842',
+  muted: '#6e7a73',
+  faint: '#a3aca6',
+
+  // Surfaces
+  bg: '#f6f4ee',
   card: '#ffffff',
-  line: '#e3e8e3',
-  gold: '#a76b17',
-  goldBg: '#fff1d9',
-  red: '#b54141',
-  redBg: '#ffe9e9',
-  blue: '#2451b0',
-  blueBg: '#e7f0ff',
-  secondary: '#edf1ed',
-  track: '#edf0ed',
-  outer: '#e8ede8',
+  line: '#ece9e1',
+  field: '#fbfaf7',
+  secondary: '#e9f2ed',
   white: '#ffffff',
+  outer: '#e9e6dd', // around the app on a laptop browser
+
+  // Status
+  gold: '#9a5b0b',
+  goldBg: '#fff2dc',
+  red: '#c0392b',
+  redBg: '#fdecea',
+  blue: '#2f5fd0',
+  blueBg: '#e9effc',
 };
 
-export const radius = { card: 17, button: 11, pill: 20, tabs: 12 };
+/** Pastel chip colours, one per module, so each section is easy to spot. */
+export const tints = {
+  green: { bg: '#e4f1ea', fg: '#1d5c45' },
+  blue: { bg: '#e9effc', fg: '#2f5fd0' },
+  purple: { bg: '#efeafb', fg: '#6a4bc4' },
+  orange: { bg: '#fff0e0', fg: '#c26a12' },
+  teal: { bg: '#e2f4f3', fg: '#16807a' },
+  rose: { bg: '#fdebee', fg: '#c2394f' },
+  gold: { bg: '#fff5d6', fg: '#9a6b00' },
+  slate: { bg: '#eceff2', fg: '#43505c' },
+} as const;
+export type Tint = keyof typeof tints;
 
-// Widest the app gets on a laptop browser (matches the prototype).
-export const maxWidth = 450;
+export const radius = { card: 20, button: 14, pill: 20, chip: 14, field: 14 };
+
+export const maxWidth = 460;
+
+/** Soft, low shadow for cards. */
+export const shadow: ViewStyle = Platform.select<ViewStyle>({
+  web: { boxShadow: '0 1px 2px rgba(22,33,28,0.04), 0 6px 18px rgba(22,33,28,0.05)' } as ViewStyle,
+  ios: { shadowColor: '#16211c', shadowOpacity: 0.06, shadowRadius: 14, shadowOffset: { width: 0, height: 6 } },
+  default: { elevation: 2 },
+})!;

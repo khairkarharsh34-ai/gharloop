@@ -12,7 +12,7 @@ const tags = [
   '<meta name="mobile-web-app-capable" content="yes">',
   '<meta name="apple-mobile-web-app-status-bar-style" content="default">',
   '<meta name="apple-mobile-web-app-title" content="Padosi">',
-  '<meta name="theme-color" content="#ffffff">',
+  '<meta name="theme-color" content="#1d5c45">',
   '<link rel="apple-touch-icon" href="/apple-touch-icon.png">',
   '<link rel="manifest" href="/manifest.json">',
 ].join('\n');
@@ -32,8 +32,8 @@ fs.writeFileSync(
     short_name: 'Padosi',
     start_url: '/',
     display: 'standalone',
-    background_color: '#f5f7f4',
-    theme_color: '#245c43',
+    background_color: '#f6f4ee',
+    theme_color: '#1d5c45',
     icons: [{ src: '/icon-512.png', sizes: '512x512', type: 'image/png' }],
   }, null, 2),
 );

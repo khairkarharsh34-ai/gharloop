@@ -8,7 +8,8 @@ import { Input } from '@/components/Input';
 import { Screen } from '@/components/Screen';
 import { SocietyPicker } from '@/components/SocietyPicker';
 import { useToast } from '@/components/Toast';
-import { Bold, Fine, Muted } from '@/components/Typography';
+import { StepHeader } from '@/components/StepHeader';
+import { Fine } from '@/components/Typography';
 import { signUp } from '@/lib/api';
 import { colors } from '@/lib/theme';
 
@@ -51,42 +52,45 @@ export default function SignUp() {
   }
 
   return (
-    <Screen bare>
-      <Brand />
-      <Card>
-        <Bold>Create your account</Bold>
-        <Input label="Full name" value={form.full_name} onChangeText={set('full_name')} placeholder="Akash Sharma" autoComplete="name" />
-        <Input label="Email" value={form.email} onChangeText={set('email')} autoCapitalize="none" keyboardType="email-address" autoComplete="email" placeholder="you@example.com" />
-        <Input label="Password" value={form.password} onChangeText={set('password')} secureTextEntry placeholder="At least 6 characters" autoComplete="new-password" />
-        <Input label="Phone (optional)" value={form.phone} onChangeText={set('phone')} keyboardType="phone-pad" placeholder="+91" />
-      </Card>
-      <Card>
-        <Bold>Your home</Bold>
-        <Muted>Your Society Admin approves new residents.</Muted>
-        <SocietyPicker value={societyId} onChange={setSocietyId} />
-        <View style={s.two}>
-          <View style={s.half}>
-            <Input label="Tower / Wing" value={form.tower} onChangeText={set('tower')} placeholder="B" autoCapitalize="characters" />
+    <Screen bleed>
+      <Brand title={'Join your\nsociety on Padosi'} subtitle="Takes a minute. Your Society Admin approves new residents." />
+      <View style={s.body}>
+        <Card style={s.card}>
+          <StepHeader n={1} title="About you" />
+          <Input label="Full name" value={form.full_name} onChangeText={set('full_name')} placeholder="Akash Sharma" autoComplete="name" />
+          <Input label="Email" value={form.email} onChangeText={set('email')} autoCapitalize="none" keyboardType="email-address" autoComplete="email" placeholder="you@example.com" />
+          <Input label="Password" value={form.password} onChangeText={set('password')} secureTextEntry placeholder="At least 6 characters" autoComplete="new-password" />
+          <Input label="Phone (optional)" value={form.phone} onChangeText={set('phone')} keyboardType="phone-pad" placeholder="+91" />
+        </Card>
+        <Card style={s.card}>
+          <StepHeader n={2} title="Your home" hint="Pick your society and flat" />
+          <SocietyPicker value={societyId} onChange={setSocietyId} />
+          <View style={s.two}>
+            <View style={s.half}>
+              <Input label="Tower / Wing" value={form.tower} onChangeText={set('tower')} placeholder="B" autoCapitalize="characters" />
+            </View>
+            <View style={s.half}>
+              <Input label="Flat" value={form.flat} onChangeText={set('flat')} placeholder="1204" />
+            </View>
           </View>
-          <View style={s.half}>
-            <Input label="Flat" value={form.flat} onChangeText={set('flat')} placeholder="1204" />
-          </View>
-        </View>
-        {error ? <Text style={s.error}>{error}</Text> : null}
-        <Button title="Create account" onPress={submit} loading={busy} full />
+          {error ? <Text style={s.error}>{error}</Text> : null}
+          <Button title="Create account" onPress={submit} loading={busy} full style={{ marginTop: 20 }} />
+        </Card>
+        <Link href="/sign-in" style={s.link}>
+          Already have an account? <Text style={s.linkBold}>Sign in</Text>
+        </Link>
         <Fine>By joining you agree to follow your society's community guidelines.</Fine>
-      </Card>
-      <Link href="/sign-in" style={s.link}>
-        Already have an account? <Text style={s.linkBold}>Sign in</Text>
-      </Link>
+      </View>
     </Screen>
   );
 }
 
 const s = StyleSheet.create({
+  body: { paddingHorizontal: 18, marginTop: -40 },
+  card: { padding: 20 },
   two: { flexDirection: 'row', gap: 9 },
   half: { flex: 1 },
-  error: { color: colors.red, fontSize: 12, marginTop: 10 },
-  link: { textAlign: 'center', color: colors.muted, fontSize: 13, marginTop: 14 },
+  error: { color: colors.red, fontSize: 13, marginTop: 12 },
+  link: { textAlign: 'center', color: colors.muted, fontSize: 14, marginTop: 10 },
   linkBold: { color: colors.green, fontWeight: '800' },
 });

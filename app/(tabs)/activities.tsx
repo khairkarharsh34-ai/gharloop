@@ -1,5 +1,8 @@
 import { ComingSoon } from '@/components/ComingSoon';
+import { modules } from '@/lib/modules';
 
-export default function Activities() {
-  return <ComingSoon icon="🎯" title="Activities & Play" tagline="Community-led first. Professional activities only when your society permits." />;
+const info = modules.find((m) => m.key === 'activities')!;
+
+export default function Page() {
+  return <ComingSoon icon={info.icon} tint={info.tint} title={info.title} tagline={info.tagline} points={info.points} />;
 }

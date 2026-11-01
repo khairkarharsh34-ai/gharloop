@@ -5,7 +5,7 @@ and as a website that can be added to an iPhone's Home Screen.
 
 ## What's built so far
 
-- **Foundation:** sign up, sign in, sign out, choose society and flat, Society Admin approval of new residents,
+- **Foundation:** new design system (green + marigold), sign up, sign in, sign out, choose society and flat, Society Admin approval of new residents,
   role-aware Profile, Home grid, bottom tabs (Home, Resolve, Community, Activities, Profile).
 - Other modules show a "Coming in the next update" page until they're built.
 
@@ -18,7 +18,8 @@ and as a website that can be added to an iPhone's Home Screen.
 | `lib/api.ts` | Every database call |
 | `lib/theme.ts` | Colours and sizes from the prototype |
 | `supabase/` | SQL files to run in Supabase, in number order |
-| `reference/prototype.html` | The design reference |
+| `lib/modules.ts` | Module names, icons and colours |
+| `reference/prototype.html` | Original feature prototype |
 
 ## One-time setup
 

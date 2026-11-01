@@ -1,21 +1,19 @@
-import { router, type Href } from 'expo-router';
+import { router } from 'expo-router';
 import { useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Avatar } from '@/components/Avatar';
+import { Hero } from '@/components/Hero';
+import { Logo } from '@/components/Logo';
+import { QuickAction } from '@/components/QuickAction';
 import { Screen } from '@/components/Screen';
 import { Section } from '@/components/Section';
 import { EmptyState } from '@/components/States';
 import { Grid, Tile } from '@/components/Tile';
-import { Hello, Muted } from '@/components/Typography';
+import { Fine } from '@/components/Typography';
 import { useAuth } from '@/lib/auth';
-
-const modules: { icon: string; title: string; subtitle: string; href: Href }[] = [
-  { icon: '🏢', title: 'Resolve', subtitle: 'Issues, owners & deadlines', href: '/resolve' },
-  { icon: '🤝', title: 'Community', subtitle: 'Neighbours, chats & announcements', href: '/community' },
-  { icon: '🎯', title: 'Activities', subtitle: 'Free, paid & nearby', href: '/activities' },
-  { icon: '🛠️', title: 'Services & Shops', subtitle: 'Recommended local help', href: '/module/services' },
-  { icon: '🆘', title: 'Need Help', subtitle: 'Request trusted help', href: '/module/needhelp' },
-  { icon: '💰', title: 'Funds', subtitle: 'Maintenance transparency', href: '/module/funds' },
-  { icon: '🚪', title: 'Gate & Visitors', subtitle: 'Pre-approve & SOS', href: '/module/gate' },
-];
+import { gate, modules } from '@/lib/modules';
+import { colors } from '@/lib/theme';
 
 function greeting() {
   const h = new Date().getHours();
@@ -26,6 +24,7 @@ function greeting() {
 
 export default function Home() {
   const { profile, refresh } = useAuth();
+  const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
 
   async function reload() {
@@ -34,26 +33,71 @@ export default function Home() {
     setRefreshing(false);
   }
 
-  const firstName = profile?.full_name.split(' ')[0] || 'neighbour';
-  const place = profile?.society ? `${profile.society.name} · ${profile.society.city}` : 'Padosi platform';
+  const name = profile?.full_name || 'Neighbour';
+  const flat = [profile?.tower, profile?.flat].filter(Boolean).join('-');
+  const place = profile?.society ? [profile.society.name, flat].filter(Boolean).join(' · ') : 'Padosi platform';
 
   return (
-    <Screen onRefresh={reload} refreshing={refreshing}>
-      <Hello>
-        {greeting()}, {firstName} 👋
-      </Hello>
-      <Muted>{place}</Muted>
+    <Screen bleed onRefresh={reload} refreshing={refreshing}>
+      <Hero style={[s.hero, { paddingTop: insets.top + 14 }]}>
+        <View style={s.top}>
+          <Logo size={34} />
+          <Pressable onPress={() => router.push('/profile')} style={s.avatarRing}>
+            <Avatar name={name} size={38} />
+          </Pressable>
+        </View>
 
-      <Section title="Your community" />
-      <Grid>
-        {modules.map((m) => (
-          <Tile key={m.title} icon={m.icon} title={m.title} subtitle={m.subtitle} onPress={() => router.push(m.href)} />
-        ))}
-      </Grid>
+        <Text style={s.greet}>{greeting()},</Text>
+        <Text style={s.name}>{name.split(' ')[0]} 👋</Text>
+        <View style={s.place}>
+          <Text style={s.placeText}>🏡  {place}</Text>
+        </View>
 
-      <Section title="This week" />
-      {/* Filled with real issues, activities and businesses as each module is built. */}
-      <EmptyState icon="📅" title="Nothing this week yet" text="Open issues, upcoming activities and new resident businesses will show up here." />
+        <View style={s.actions}>
+          <QuickAction icon="🚪" label="Visitor" onPress={() => router.push(gate.href)} />
+          <QuickAction icon="🛠️" label="Report" onPress={() => router.push('/resolve')} />
+          <QuickAction icon="🙋" label="Get help" onPress={() => router.push('/module/needhelp')} />
+          <QuickAction icon="🚨" label="SOS" danger onPress={() => router.push(gate.href)} />
+        </View>
+      </Hero>
+
+      <View style={s.body}>
+        <Section title="Explore your society" />
+        <Grid>
+          {modules.map((m) => (
+            <Tile key={m.key} icon={m.icon} tint={m.tint} title={m.title} subtitle={m.subtitle} onPress={() => router.push(m.href)} />
+          ))}
+        </Grid>
+
+        <Section title="This week" />
+        {/* Filled with real issues, activities and businesses as each module is built. */}
+        <EmptyState
+          icon="📅"
+          tint="orange"
+          title="A quiet week so far"
+          text="Open issues, upcoming activities and new home businesses from your society will appear here."
+        />
+        <Fine>Padosi · made for neighbours</Fine>
+      </View>
     </Screen>
   );
 }
+
+const s = StyleSheet.create({
+  hero: { paddingHorizontal: 20, paddingBottom: 24, borderBottomLeftRadius: 32, borderBottomRightRadius: 32 },
+  top: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  avatarRing: { padding: 2, borderRadius: 24, backgroundColor: 'rgba(255,255,255,0.25)' },
+  greet: { color: 'rgba(255,255,255,0.75)', fontSize: 16, marginTop: 28 },
+  name: { color: colors.white, fontSize: 32, fontWeight: '800', letterSpacing: -0.8, marginTop: 2 },
+  place: {
+    alignSelf: 'flex-start',
+    marginTop: 12,
+    backgroundColor: 'rgba(255,255,255,0.12)',
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+  placeText: { color: colors.white, fontSize: 13, fontWeight: '600' },
+  actions: { flexDirection: 'row', marginTop: 26, gap: 6 },
+  body: { paddingHorizontal: 18 },
+});
