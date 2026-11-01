@@ -36,7 +36,7 @@ export default function Home() {
 
   const name = profile?.full_name || 'Neighbour';
   const flat = [profile?.tower, profile?.flat].filter(Boolean).join('-');
-  const place = profile?.society ? [profile.society.name, flat].filter(Boolean).join(' · ') : 'Padosi platform';
+  const place = profile?.society ? [profile.society.name, flat].filter(Boolean).join(' · ') : 'Ghar Loop platform';
 
   return (
     <Screen bleed onRefresh={reload} refreshing={refreshing}>
@@ -79,7 +79,7 @@ export default function Home() {
           title="A quiet week so far"
           text="Open issues, upcoming activities and new home businesses from your society will appear here."
         />
-        <Fine>Padosi · made for neighbours</Fine>
+        <Fine>Ghar Loop · made for neighbours</Fine>
       </View>
     </Screen>
   );

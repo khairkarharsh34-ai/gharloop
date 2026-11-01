@@ -1,7 +1,9 @@
-# Project: Padosi (housing society community app, India)
+# Project: Ghar Loop (housing society community app, India)
+
+The product name is **Ghar Loop** everywhere users can see it. ("Padosi" was an early working name.)
 
 Android app for residents, guards and admins of a housing society.
-Design: Padosi design system v2 (see `lib/theme.ts`). `reference/prototype.html` is the original
+Design: Ghar Loop design system v2 (see `lib/theme.ts`). `reference/prototype.html` is the original
 feature reference only; the visual design has moved on from it.
 
 ## Stack
@@ -21,7 +23,7 @@ resident, guard, society_admin, super_admin
 - Shapes: 20px card radius, 14px buttons/inputs, pill badges, 50px tall buttons.
 - Each module has its own pastel tint (`tints` in lib/theme.ts) used for its icon chip.
 - Big bold page titles (30px), green hero panel with soft circles on Home and login screens.
-- Logo: marigold rounded square with "प" + "padosi" wordmark (components/Logo.tsx).
+- Logo: marigold rounded square with "घ" + "ghar" white / "loop" marigold wordmark (components/Logo.tsx).
 - Bottom tabs: Home, Resolve, Community, Activities, Profile (active tab = soft green pill).
 - Module list (icons, tints, copy) lives in lib/modules.ts.
 

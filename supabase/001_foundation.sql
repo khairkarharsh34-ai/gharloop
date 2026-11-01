@@ -1,4 +1,4 @@
--- Padosi · 001 Foundation
+-- Ghar Loop · 001 Foundation
 -- Societies, user profiles, roles, join approval and Row Level Security.
 -- Run once in Supabase → SQL Editor → New query → paste → Run.
 

@@ -1,6 +1,6 @@
 import { Platform, type ViewStyle } from 'react-native';
 
-// Padosi design system v2: deep "neem" green for trust,
+// Ghar Loop design system v2: deep "neem" green for trust,
 // marigold for warmth, and a soft cream background instead of cold grey.
 export const colors = {
   // Brand

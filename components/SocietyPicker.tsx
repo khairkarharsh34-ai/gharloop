@@ -29,7 +29,7 @@ export function SocietyPicker({ value, onChange }: Props) {
   if (error) return <View style={s.gap}><ErrorState message={error} onRetry={load} /></View>;
   if (!items) return <Loading label="Loading societies…" />;
   if (!items.length)
-    return <View style={s.gap}><EmptyState icon="business-outline" title="No societies yet" text="Ask the Padosi team to add your society first." /></View>;
+    return <View style={s.gap}><EmptyState icon="business-outline" title="No societies yet" text="Ask the Ghar Loop team to add your society first." /></View>;
 
   return (
     <View style={[s.gap, s.list]}>

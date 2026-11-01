@@ -31,7 +31,7 @@ export default function SignIn() {
 
   return (
     <Screen bleed>
-      <Brand title={'Welcome back,\npadosi.'} subtitle="Your society's notices, issues, visitors and neighbours — in one place." />
+      <Brand title={'Welcome\nhome.'} subtitle="Your society's notices, issues, visitors and neighbours — in one place." />
       <View style={s.body}>
         <Card style={s.card}>
           <Input label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" autoComplete="email" placeholder="you@example.com" />
@@ -40,7 +40,7 @@ export default function SignIn() {
           <Button title="Sign in" onPress={submit} loading={busy} full style={{ marginTop: 20 }} />
         </Card>
         <Link href="/sign-up" style={s.link}>
-          New to Padosi? <Text style={s.linkBold}>Create an account</Text>
+          New to Ghar Loop? <Text style={s.linkBold}>Create an account</Text>
         </Link>
         <Fine>Only verified residents of your society can see its information.</Fine>
       </View>

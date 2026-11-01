@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Padosi",
-    "slug": "padosi",
+    "name": "Ghar Loop",
+    "slug": "gharloop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gharloop.padosi"
+      "bundleIdentifier": "com.gharloop.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -18,18 +18,18 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.gharloop.padosi"
+      "package": "com.gharloop.app"
     },
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
       "output": "single",
-      "name": "Padosi",
-      "shortName": "Padosi",
+      "name": "Ghar Loop",
+      "shortName": "Ghar Loop",
       "themeColor": "#1d5c45",
       "backgroundColor": "#f6f4ee"
     },
-    "scheme": "padosi",
+    "scheme": "gharloop",
     "backgroundColor": "#f6f4ee",
     "plugins": [
       "expo-router"

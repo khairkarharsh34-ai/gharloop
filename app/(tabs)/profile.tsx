@@ -96,7 +96,7 @@ export default function ProfileTab() {
       </Card>
 
       <Button title="Sign out" variant="danger" onPress={logout} full />
-      <Fine>Padosi · version 1.0</Fine>
+      <Fine>Ghar Loop · version 1.0</Fine>
     </Screen>
   );
 }

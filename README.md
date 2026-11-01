@@ -1,4 +1,4 @@
-# Padosi — housing society community app
+# Ghar Loop — housing society community app
 
 Expo (React Native + TypeScript + Expo Router) with Supabase. Runs as an Android/iOS app in Expo Go
 and as a website that can be added to an iPhone's Home Screen.

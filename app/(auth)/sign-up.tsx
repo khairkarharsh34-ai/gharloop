@@ -53,7 +53,7 @@ export default function SignUp() {
 
   return (
     <Screen bleed>
-      <Brand title={'Join your\nsociety on Padosi'} subtitle="Takes a minute. Your Society Admin approves new residents." />
+      <Brand title={'Join your\nsociety on Ghar Loop'} subtitle="Takes a minute. Your Society Admin approves new residents." />
       <View style={s.body}>
         <Card style={s.card}>
           <StepHeader n={1} title="About you" />
