@@ -37,6 +37,9 @@ export default function SignIn() {
           <Input label="Email" value={email} onChangeText={setEmail} autoCapitalize="none" keyboardType="email-address" autoComplete="email" placeholder="you@example.com" />
           <Input label="Password" value={password} onChangeText={setPassword} secureTextEntry autoComplete="password" placeholder="Your password" onSubmitEditing={submit} />
           {error ? <Text style={s.error}>{error}</Text> : null}
+          <Link href="/forgot-password" style={s.forgot}>
+            Forgot password?
+          </Link>
           <Button title="Sign in" onPress={submit} loading={busy} full style={{ marginTop: 20 }} />
         </Card>
         <Link href="/sign-up" style={s.link}>
@@ -54,4 +57,5 @@ const s = StyleSheet.create({
   error: { ...font('400'), color: colors.red, fontSize: 13, marginTop: 12 },
   link: { ...font('400'), textAlign: 'center', color: colors.muted, fontSize: 14, marginTop: 10 },
   linkBold: { ...font('800'), color: colors.green },
+  forgot: { ...font('600'), color: colors.green, fontSize: 13, marginTop: 12, alignSelf: 'flex-end' },
 });

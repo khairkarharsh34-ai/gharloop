@@ -34,10 +34,12 @@ Services and Shops (contacts, resident businesses with FSSAI), Need Help, Funds,
 Gate and Visitors (6-digit code, guard screen, SOS), Admin and Super Admin.
 
 ## Rules
-- Small files, reusable components in /components, all DB calls in /lib/api.ts.
+- Small files, reusable components in /components. All DB calls go through /lib/api.ts, which re-exports
+  one file per module from /lib/api/ (client.ts has the shared helpers).
+- Database changes go in a new numbered file in /supabase (001, 002, …). Never edit one that has been run.
 - Every screen: loading, empty and error states, pull-to-refresh.
 - Real Supabase data only, no hardcoded mock lists.
 - Payments are faked: a "Pay (test)" button records a row. No payment gateway.
-- Work one module at a time. After each module, tell me how to test it on my phone in Expo Go.
+- Work one module at a time. After each module, tell me how to test it (live web link and Expo Go).
 - Explain every command I must run. Ask before installing anything extra.
 - Budget is zero for services: free tiers only.

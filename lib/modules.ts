@@ -33,23 +33,23 @@ export const modules: ModuleInfo[] = [
   },
   {
     key: 'services', icon: 'storefront-outline', tint: 'teal', title: 'Services & Shops', subtitle: 'Trusted help & home businesses',
-    tagline: 'Help your neighbours actually use.', href: '/module/services',
+    tagline: 'Help your neighbours actually use.', href: '/services',
     points: ['Maids, cooks, plumbers recommended by neighbours', 'Resident businesses with FSSAI details', 'Save and call contacts'],
   },
   {
     key: 'needhelp', icon: 'hand-left-outline', tint: 'rose', title: 'Need Help', subtitle: 'Ask for a service',
-    tagline: 'Tell us what you need. We route it and track it.', href: '/module/needhelp',
+    tagline: 'Tell us what you need. We route it and track it.', href: '/help',
     points: ['Plumbing, electrical, cleaning and more', 'Pick today, tomorrow or flexible', 'Track status until it is done'],
   },
   {
     key: 'funds', icon: 'wallet-outline', tint: 'gold', title: 'Funds', subtitle: 'Where maintenance goes',
-    tagline: 'Visibility creates accountability — not blame.', href: '/module/funds',
+    tagline: 'Visibility creates accountability — not blame.', href: '/funds',
     points: ['Balance, collections and spending', 'Every expense with an approver', 'Pay maintenance (test mode)'],
   },
 ];
 
 export const gate: ModuleInfo = {
   key: 'gate', icon: 'shield-checkmark-outline', tint: 'slate', title: 'Gate & Visitors', subtitle: 'Pre-approve & SOS',
-  tagline: 'Pre-approve guests and reach security fast.', href: '/module/gate',
+  tagline: 'Pre-approve guests and reach security fast.', href: '/gate',
   points: ['6-digit entry code for each visitor', 'Guard sees who is expected', 'SOS alerts the guard and admin instantly'],
 };

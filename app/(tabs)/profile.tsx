@@ -5,7 +5,6 @@ import { Avatar } from '@/components/Avatar';
 import { Button } from '@/components/Button';
 import { Card, Divider } from '@/components/Card';
 import { HomeDetailsForm } from '@/components/HomeDetailsForm';
-import { JoinRequests } from '@/components/JoinRequests';
 import { LinkRow } from '@/components/LinkRow';
 import { Pill } from '@/components/Pill';
 import { Screen } from '@/components/Screen';
@@ -23,12 +22,10 @@ export default function ProfileTab() {
   const toast = useToast();
   const [refreshing, setRefreshing] = useState(false);
   const [editing, setEditing] = useState(false);
-  const [reloadKey, setReloadKey] = useState(0);
 
   async function reload() {
     setRefreshing(true);
     await refresh();
-    setReloadKey((k) => k + 1);
     setRefreshing(false);
   }
 
@@ -81,12 +78,15 @@ export default function ProfileTab() {
         )}
       </Card>
 
-      {isAdmin(profile.role) ? (
-        <>
-          <Section title="Resident requests" />
-          <JoinRequests me={profile} reloadKey={reloadKey} />
-        </>
-      ) : null}
+      <Section title="Shortcuts" />
+      <Card style={s.list}>
+        {isAdmin(profile.role) ? (
+          <LinkRow icon="speedometer-outline" tint="gold" title="Admin dashboard" subtitle="Approvals, members & roles" onPress={() => router.push('/admin')} />
+        ) : null}
+        <LinkRow icon="shield-checkmark-outline" tint="slate" title={profile.role === 'guard' ? 'Gate desk' : 'My visitors'} onPress={() => router.push('/gate')} />
+        <LinkRow icon="hand-left-outline" tint="rose" title="My help requests" onPress={() => router.push('/help')} />
+        <LinkRow icon="wallet-outline" tint="gold" title="Maintenance & funds" onPress={() => router.push('/funds')} last />
+      </Card>
 
       <Section title="Help & legal" />
       <Card style={s.list}>

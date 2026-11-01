@@ -47,6 +47,7 @@ function Routes() {
   // Send people to the right place: login → waiting for approval → the app.
   useEffect(() => {
     if (loading) return;
+    if (area === 'reset-password') return; // reached from the reset email: stay there
     const inAuth = area === '(auth)';
     const inPending = area === 'pending';
     if (!session) {

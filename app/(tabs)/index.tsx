@@ -9,11 +9,13 @@ import { Logo } from '@/components/Logo';
 import { QuickAction } from '@/components/QuickAction';
 import { Screen } from '@/components/Screen';
 import { Section } from '@/components/Section';
-import { EmptyState } from '@/components/States';
+import { HomeFeed } from '@/components/HomeFeed';
+import { ItemCard } from '@/components/ItemCard';
 import { Grid, Tile } from '@/components/Tile';
 import { Fine } from '@/components/Typography';
 import { useAuth } from '@/lib/auth';
 import { gate, modules } from '@/lib/modules';
+import { isAdmin } from '@/lib/types';
 import { colors, font } from '@/lib/theme';
 
 function greeting() {
@@ -27,9 +29,12 @@ export default function Home() {
   const { profile, refresh } = useAuth();
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
+  const [feedKey, setFeedKey] = useState(0);
+  const guard = profile?.role === 'guard';
 
   async function reload() {
     setRefreshing(true);
+    setFeedKey((k) => k + 1);
     await refresh();
     setRefreshing(false);
   }
@@ -55,30 +60,44 @@ export default function Home() {
           <Text style={s.placeText}>{place}</Text>
         </View>
 
-        <View style={s.actions}>
-          <QuickAction icon="person-add-outline" label="Visitor" onPress={() => router.push(gate.href)} />
-          <QuickAction icon="construct-outline" label="Report" onPress={() => router.push('/resolve')} />
-          <QuickAction icon="hand-left-outline" label="Get help" onPress={() => router.push('/module/needhelp')} />
-          <QuickAction icon="alert-circle-outline" label="SOS" danger onPress={() => router.push(gate.href)} />
-        </View>
+        {guard ? (
+          <View style={s.actions}>
+            <QuickAction icon="keypad-outline" label="Verify code" onPress={() => router.push(gate.href)} />
+            <QuickAction icon="people-outline" label="Expected" onPress={() => router.push(gate.href)} />
+            <QuickAction icon="construct-outline" label="Report" onPress={() => router.push('/resolve/new')} />
+            <QuickAction icon="chatbubbles-outline" label="Notices" onPress={() => router.push('/community')} />
+          </View>
+        ) : (
+          <View style={s.actions}>
+            <QuickAction icon="person-add-outline" label="Visitor" onPress={() => router.push('/gate/new')} />
+            <QuickAction icon="construct-outline" label="Report" onPress={() => router.push('/resolve/new')} />
+            <QuickAction icon="hand-left-outline" label="Get help" onPress={() => router.push('/help')} />
+            <QuickAction icon="alert-circle-outline" label="SOS" danger onPress={() => router.push(gate.href)} />
+          </View>
+        )}
       </Hero>
 
       <View style={s.body}>
+        {isAdmin(profile?.role) ? (
+          <View style={{ marginTop: 18, marginBottom: -8 }}>
+            <ItemCard
+              icon="speedometer-outline"
+              tint="gold"
+              title="Admin dashboard"
+              subtitle="Approvals, members, roles and stats"
+              onPress={() => router.push('/admin')}
+            />
+          </View>
+        ) : null}
         <Section title="Explore your society" />
         <Grid>
-          {modules.map((m) => (
+          {[...modules, gate].map((m) => (
             <Tile key={m.key} icon={m.icon} tint={m.tint} title={m.title} subtitle={m.subtitle} onPress={() => router.push(m.href)} />
           ))}
         </Grid>
 
         <Section title="This week" />
-        {/* Filled with real issues, activities and businesses as each module is built. */}
-        <EmptyState
-          icon="calendar-outline"
-          tint="orange"
-          title="A quiet week so far"
-          text="Open issues, upcoming activities and new home businesses from your society will appear here."
-        />
+        <HomeFeed reloadKey={feedKey} />
         <Fine>Ghar Loop · made for neighbours</Fine>
       </View>
     </Screen>

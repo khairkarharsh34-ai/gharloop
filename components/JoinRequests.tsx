@@ -55,7 +55,7 @@ export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number
     <View>
       {items.map((r) => {
         const flat = [r.tower, r.flat].filter(Boolean).join('-');
-        const meta = [me.role === 'super_admin' ? r.society?.name : null, r.phone, `Asked ${new Date(r.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`];
+        const meta = [me.role === 'super_admin' ? r.society?.name : null, `Asked ${new Date(r.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}`];
         return (
           <Card key={r.id}>
             <View style={s.top}>

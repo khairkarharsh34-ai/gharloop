@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, type IconName } from '@/components/Icon';
+import { SosBanner } from '@/components/SosBanner';
 import { colors, font } from '@/lib/theme';
 
 /** Outline icon normally, filled icon in a soft green pill when active. */
@@ -20,7 +21,8 @@ const icon =
 export default function TabsLayout() {
   const insets = useSafeAreaInsets();
   return (
-    <Tabs
+    <SosBanner>
+      <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.green,
@@ -42,7 +44,8 @@ export default function TabsLayout() {
       <Tabs.Screen name="community" options={{ title: 'Community', tabBarIcon: icon('chatbubbles') }} />
       <Tabs.Screen name="activities" options={{ title: 'Activities', tabBarIcon: icon('bicycle') }} />
       <Tabs.Screen name="profile" options={{ title: 'Profile', tabBarIcon: icon('person-circle') }} />
-    </Tabs>
+      </Tabs>
+    </SosBanner>
   );
 }
 

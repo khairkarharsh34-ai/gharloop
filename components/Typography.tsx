@@ -23,3 +23,7 @@ const s = StyleSheet.create({
   overline: { ...font('800'), fontSize: 11, color: colors.muted, letterSpacing: 0.8, textTransform: 'uppercase' },
   fine: { ...font('400'), fontSize: 11, color: colors.faint, lineHeight: 16, marginTop: 12, marginHorizontal: 4, textAlign: 'center' },
 });
+
+/** Red error line under a form. */
+export const ErrorText = ({ children }: { children: string | null }) =>
+  children ? <Text style={{ ...font('500'), color: colors.red, fontSize: 13, marginTop: 12 }}>{children}</Text> : null;
