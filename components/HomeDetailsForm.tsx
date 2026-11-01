@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { updateMyProfile, type ProfilePatch } from '@/lib/api';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 import type { Profile } from '@/lib/types';
 import { Button } from './Button';
 import { Input } from './Input';
@@ -75,5 +75,5 @@ export function HomeDetailsForm({ profile, chooseSociety, saveLabel = 'Save deta
 const s = StyleSheet.create({
   two: { flexDirection: 'row', gap: 12 },
   half: { flex: 1 },
-  error: { color: colors.red, fontSize: 13, marginTop: 12 },
+  error: { ...font('400'), color: colors.red, fontSize: 13, marginTop: 12 },
 });

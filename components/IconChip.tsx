@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { radius, tints, type Tint } from '@/lib/theme';
+import { Icon, type IconName } from './Icon';
 
-/** Emoji inside a soft coloured rounded square. */
-export function IconChip({ icon, tint = 'green', size = 44 }: { icon: string; tint?: Tint; size?: number }) {
+/** Line icon inside a soft coloured rounded square. */
+export function IconChip({ icon, tint = 'green', size = 44 }: { icon: IconName; tint?: Tint; size?: number }) {
+  const t = tints[tint];
   return (
-    <View style={[s.chip, { width: size, height: size, backgroundColor: tints[tint].bg, borderRadius: size > 50 ? 20 : radius.chip }]}>
-      <Text style={{ fontSize: size * 0.48 }}>{icon}</Text>
+    <View style={[s.chip, { width: size, height: size, backgroundColor: t.bg, borderRadius: size > 50 ? 20 : radius.chip }]}>
+      <Icon name={icon} size={Math.round(size * 0.5)} color={t.fg} />
     </View>
   );
 }

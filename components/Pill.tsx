@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from 'react-native';
-import { colors, radius } from '@/lib/theme';
+import { colors, radius, font } from '@/lib/theme';
 
 export type PillTone = 'green' | 'gold' | 'red' | 'blue' | 'grey';
 
@@ -17,9 +17,8 @@ export function Pill({ label, tone = 'green' }: { label: string; tone?: PillTone
 }
 
 const s = StyleSheet.create({
-  pill: {
+  pill: { ...font('700'),
     fontSize: 11,
-    fontWeight: '700',
     paddingVertical: 4,
     paddingHorizontal: 10,
     borderRadius: radius.pill,

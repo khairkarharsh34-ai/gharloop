@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
-import { colors, radius } from '@/lib/theme';
+import { colors, radius, font } from '@/lib/theme';
 
 type Props = TextInputProps & { label?: string };
 
@@ -28,8 +28,8 @@ export function Input({ label, style, onFocus, onBlur, ...rest }: Props) {
 
 const s = StyleSheet.create({
   wrap: { marginTop: 14 },
-  label: { fontSize: 13, fontWeight: '600', color: colors.ink2, marginBottom: 6, marginLeft: 2 },
-  input: {
+  label: { ...font('600'), fontSize: 13, color: colors.ink2, marginBottom: 6, marginLeft: 2 },
+  input: { ...font('400'),
     borderWidth: 1.5,
     borderColor: colors.line,
     borderRadius: radius.field,

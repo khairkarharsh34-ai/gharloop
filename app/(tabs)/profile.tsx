@@ -15,7 +15,7 @@ import { useToast } from '@/components/Toast';
 import { Fine } from '@/components/Typography';
 import { signOut } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 import { isAdmin, roleLabel } from '@/lib/types';
 
 export default function ProfileTab() {
@@ -58,7 +58,7 @@ export default function ProfileTab() {
         <Text style={s.email}>{session?.user.email}</Text>
         <View style={s.chips}>
           <Pill label={roleLabel[profile.role]} />
-          {flat ? <Pill label={`🏠 ${flat}`} tone="grey" /> : null}
+          {flat ? <Pill label={`Flat ${flat}`} tone="grey" /> : null}
           {profile.society ? <Pill label={profile.society.name} tone="grey" /> : null}
         </View>
       </Card>
@@ -90,9 +90,9 @@ export default function ProfileTab() {
 
       <Section title="Help & legal" />
       <Card style={s.list}>
-        <LinkRow icon="📘" tint="blue" title="Community guidelines" onPress={() => router.push('/module/guidelines')} />
-        <LinkRow icon="📮" tint="rose" title="Report a problem" subtitle="Contact the Grievance Officer" onPress={() => router.push('/module/grievance')} />
-        <LinkRow icon="🔒" tint="slate" title="Privacy & data" onPress={() => router.push('/module/privacy')} last />
+        <LinkRow icon="book-outline" tint="blue" title="Community guidelines" onPress={() => router.push('/module/guidelines')} />
+        <LinkRow icon="mail-outline" tint="rose" title="Report a problem" subtitle="Contact the Grievance Officer" onPress={() => router.push('/module/grievance')} />
+        <LinkRow icon="lock-closed-outline" tint="slate" title="Privacy & data" onPress={() => router.push('/module/privacy')} last />
       </Card>
 
       <Button title="Sign out" variant="danger" onPress={logout} full />
@@ -112,11 +112,11 @@ function Detail({ label, value }: { label: string; value: string | null }) {
 
 const s = StyleSheet.create({
   me: { alignItems: 'center', paddingVertical: 26 },
-  name: { fontSize: 22, fontWeight: '800', color: colors.ink, marginTop: 14, letterSpacing: -0.4 },
-  email: { fontSize: 13, color: colors.muted, marginTop: 3 },
+  name: { ...font('800'), fontSize: 22, color: colors.ink, marginTop: 14, letterSpacing: -0.4 },
+  email: { ...font('400'), fontSize: 13, color: colors.muted, marginTop: 3 },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginTop: 14 },
   list: { paddingVertical: 4 },
   detail: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  detailLabel: { fontSize: 14, color: colors.muted },
-  detailValue: { fontSize: 15, fontWeight: '600', color: colors.ink },
+  detailLabel: { ...font('400'), fontSize: 14, color: colors.muted },
+  detailValue: { ...font('600'), fontSize: 15, color: colors.ink },
 });

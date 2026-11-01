@@ -11,7 +11,7 @@ import { useToast } from '@/components/Toast';
 import { StepHeader } from '@/components/StepHeader';
 import { Fine } from '@/components/Typography';
 import { signUp } from '@/lib/api';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 
 export default function SignUp() {
   const toast = useToast();
@@ -90,7 +90,7 @@ const s = StyleSheet.create({
   card: { padding: 20 },
   two: { flexDirection: 'row', gap: 9 },
   half: { flex: 1 },
-  error: { color: colors.red, fontSize: 13, marginTop: 12 },
-  link: { textAlign: 'center', color: colors.muted, fontSize: 14, marginTop: 10 },
-  linkBold: { color: colors.green, fontWeight: '800' },
+  error: { ...font('400'), color: colors.red, fontSize: 13, marginTop: 12 },
+  link: { ...font('400'), textAlign: 'center', color: colors.muted, fontSize: 14, marginTop: 10 },
+  linkBold: { ...font('800'), color: colors.green },
 });

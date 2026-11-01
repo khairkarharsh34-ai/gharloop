@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors, radius, shadow, type Tint } from '@/lib/theme';
+import { colors, radius, shadow, type Tint, font } from '@/lib/theme';
+import type { IconName } from './Icon';
 import { IconChip } from './IconChip';
 
-type Props = { icon: string; tint?: Tint; title: string; subtitle?: string; onPress?: () => void };
+type Props = { icon: IconName; tint?: Tint; title: string; subtitle?: string; onPress?: () => void };
 
 /** Module card for the two-column grid. */
 export function Tile({ icon, tint, title, subtitle, onPress }: Props) {
@@ -37,6 +38,6 @@ const s = StyleSheet.create({
     minHeight: 132,
     ...shadow,
   },
-  title: { fontSize: 15, fontWeight: '700', color: colors.ink, marginTop: 14, letterSpacing: -0.2 },
-  sub: { fontSize: 12, color: colors.muted, marginTop: 3, lineHeight: 16 },
+  title: { ...font('700'), fontSize: 15, color: colors.ink, marginTop: 14, letterSpacing: -0.2 },
+  sub: { ...font('400'), fontSize: 12, color: colors.muted, marginTop: 3, lineHeight: 16 },
 });

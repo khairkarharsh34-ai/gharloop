@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 
 /** Marigold "प" mark + padosi wordmark (white, for green backgrounds). */
 export function Logo({ size = 40 }: { size?: number }) {
@@ -16,6 +16,7 @@ export function Logo({ size = 40 }: { size?: number }) {
 const s = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   mark: { backgroundColor: colors.marigold, alignItems: 'center', justifyContent: 'center' },
+  // Devanagari letter: Inter has no Devanagari, so this one uses the system font.
   letter: { color: colors.greenDark, fontWeight: '900', marginTop: -2 },
-  word: { color: colors.white, fontWeight: '800', letterSpacing: -0.5 },
+  word: { ...font('800'), color: colors.white, letterSpacing: -0.5 },
 });

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 
 /** Numbered heading inside a form card, e.g. "① About you". */
 export function StepHeader({ n, title, hint }: { n: number; title: string; hint?: string }) {
@@ -19,7 +19,7 @@ export function StepHeader({ n, title, hint }: { n: number; title: string; hint?
 const s = StyleSheet.create({
   row: { flexDirection: 'row', gap: 12, alignItems: 'center' },
   badge: { width: 28, height: 28, borderRadius: 14, backgroundColor: colors.soft, alignItems: 'center', justifyContent: 'center' },
-  n: { color: colors.green, fontWeight: '800', fontSize: 13 },
-  title: { fontSize: 16, fontWeight: '800', color: colors.ink },
-  hint: { fontSize: 12, color: colors.muted, marginTop: 1 },
+  n: { ...font('800'), color: colors.green, fontSize: 13 },
+  title: { ...font('800'), fontSize: 16, color: colors.ink },
+  hint: { ...font('400'), fontSize: 12, color: colors.muted, marginTop: 1 },
 });

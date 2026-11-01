@@ -1,5 +1,6 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text, type StyleProp, type ViewStyle } from 'react-native';
-import { colors, radius } from '@/lib/theme';
+import { ActivityIndicator, Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from 'react-native';
+import { colors, radius, font } from '@/lib/theme';
+import { Icon, type IconName } from './Icon';
 
 type Variant = 'primary' | 'secondary' | 'danger' | 'ghost';
 
@@ -14,7 +15,7 @@ type Props = {
   title: string;
   onPress?: () => void;
   variant?: Variant;
-  icon?: string;
+  icon?: IconName;
   full?: boolean;
   small?: boolean;
   loading?: boolean;
@@ -41,10 +42,10 @@ export function Button({ title, onPress, variant = 'primary', icon, full, small,
       {loading ? (
         <ActivityIndicator color={t.fg} size="small" />
       ) : (
-        <Text style={[s.text, small && s.smallText, { color: t.fg }]}>
-          {icon ? `${icon}  ` : ''}
-          {title}
-        </Text>
+        <View style={s.inner}>
+          {icon ? <Icon name={icon} size={small ? 17 : 19} color={t.fg} /> : null}
+          <Text style={[s.text, small && s.smallText, { color: t.fg }]}>{title}</Text>
+        </View>
       )}
     </Pressable>
   );
@@ -60,6 +61,7 @@ const s = StyleSheet.create({
   },
   small: { minHeight: 40, paddingHorizontal: 14, borderRadius: 12 },
   full: { alignSelf: 'stretch', marginTop: 12 },
-  text: { fontWeight: '700', fontSize: 15, letterSpacing: -0.1 },
+  inner: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  text: { ...font('700'), fontSize: 15, letterSpacing: -0.1 },
   smallText: { fontSize: 14 },
 });

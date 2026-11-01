@@ -1,4 +1,5 @@
 import { router, Stack, useSegments } from 'expo-router';
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
@@ -8,10 +9,15 @@ import { Loading } from '@/components/States';
 import { ToastProvider } from '@/components/Toast';
 import { Muted } from '@/components/Typography';
 import { AuthProvider, useAuth } from '@/lib/auth';
+import { appFonts } from '@/lib/fonts';
 import { isConfigured } from '@/lib/supabase';
 import { colors, maxWidth } from '@/lib/theme';
 
 export default function RootLayout() {
+  // Inter + icon font. If loading fails we still show the app with the system font.
+  const [fontsLoaded, fontError] = useFonts(appFonts);
+  if (!fontsLoaded && !fontError) return <View style={s.outer} />;
+
   return (
     <SafeAreaProvider>
       <StatusBar style="dark" />

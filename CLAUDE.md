@@ -15,6 +15,9 @@ resident, guard, society_admin, super_admin
 ## Design system (v2)
 - Colours: neem green #1d5c45 (primary), marigold #f2a33a (warm accent), cream background #f6f4ee,
   ink #16211c, muted #6e7a73, white cards with hairline #ece9e1 border + soft shadow.
+- Font: Inter, loaded in app/_layout.tsx. Use `...font('700')` from lib/theme, never fontWeight
+  (Android needs one font file per weight).
+- Icons: Ionicons line icons via components/Icon.tsx (outline normally, filled when active). No emoji icons.
 - Shapes: 20px card radius, 14px buttons/inputs, pill badges, 50px tall buttons.
 - Each module has its own pastel tint (`tints` in lib/theme.ts) used for its icon chip.
 - Big bold page titles (30px), green hero panel with soft circles on Home and login screens.

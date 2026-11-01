@@ -57,3 +57,17 @@ export const shadow: ViewStyle = Platform.select<ViewStyle>({
   ios: { shadowColor: '#16211c', shadowOpacity: 0.06, shadowRadius: 14, shadowOffset: { width: 0, height: 6 } },
   default: { elevation: 2 },
 })!;
+
+// ---------- Inter font ----------
+// Custom fonts need one font file per weight (Android can't fake bold),
+// so styles use font('700') instead of fontWeight: '700'.
+const interFamily = {
+  '400': 'Inter_400Regular',
+  '500': 'Inter_500Medium',
+  '600': 'Inter_600SemiBold',
+  '700': 'Inter_700Bold',
+  '800': 'Inter_800ExtraBold',
+  '900': 'Inter_900Black',
+} as const;
+export type FontWeight = keyof typeof interFamily;
+export const font = (weight: FontWeight = '400') => ({ fontFamily: interFamily[weight] });

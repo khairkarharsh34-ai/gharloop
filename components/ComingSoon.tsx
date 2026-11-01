@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { colors, type Tint } from '@/lib/theme';
+import { colors, type Tint, font } from '@/lib/theme';
 import { Card } from './Card';
+import { Icon, type IconName } from './Icon';
 import { IconChip } from './IconChip';
 import { Pill } from './Pill';
 import { Screen } from './Screen';
 
-type Props = { title: string; tagline: string; icon: string; tint?: Tint; points?: string[]; showBack?: boolean };
+type Props = { title: string; tagline: string; icon: IconName; tint?: Tint; points?: string[]; showBack?: boolean };
 
 /** Placeholder page for modules that are not built yet. Shows no fake data. */
 export function ComingSoon({ title, tagline, icon, tint = 'green', points = [], showBack }: Props) {
@@ -22,7 +23,7 @@ export function ComingSoon({ title, tagline, icon, tint = 'green', points = [], 
           <View style={s.list}>
             {points.map((p) => (
               <View key={p} style={s.pointRow}>
-                <Text style={s.tick}>✓</Text>
+                <Icon name="checkmark-circle" size={20} color={colors.green} />
                 <Text style={s.point}>{p}</Text>
               </View>
             ))}
@@ -35,10 +36,9 @@ export function ComingSoon({ title, tagline, icon, tint = 'green', points = [], 
 
 const s = StyleSheet.create({
   card: { alignItems: 'center', paddingVertical: 30 },
-  title: { fontSize: 18, fontWeight: '800', color: colors.ink, marginTop: 12 },
-  text: { fontSize: 14, color: colors.muted, marginTop: 6, textAlign: 'center' },
+  title: { ...font('800'), fontSize: 18, color: colors.ink, marginTop: 12 },
+  text: { ...font('400'), fontSize: 14, color: colors.muted, marginTop: 6, textAlign: 'center' },
   list: { alignSelf: 'stretch', marginTop: 20, gap: 10, backgroundColor: colors.bg, borderRadius: 14, padding: 16 },
   pointRow: { flexDirection: 'row', gap: 10 },
-  tick: { fontSize: 14, color: colors.green, fontWeight: '900', lineHeight: 20 },
-  point: { flex: 1, fontSize: 14, color: colors.ink2, lineHeight: 20 },
+  point: { ...font('400'), flex: 1, fontSize: 14, color: colors.ink2, lineHeight: 20 },
 });

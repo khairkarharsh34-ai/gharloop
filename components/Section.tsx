@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 
 type Props = { title: string; action?: { label: string; onPress: () => void } };
 
@@ -26,6 +26,6 @@ const s = StyleSheet.create({
     marginBottom: 12,
     marginHorizontal: 2,
   },
-  title: { fontSize: 18, fontWeight: '800', color: colors.ink, letterSpacing: -0.3 },
-  action: { fontSize: 13, fontWeight: '700', color: colors.green },
+  title: { ...font('800'), fontSize: 18, color: colors.ink, letterSpacing: -0.3 },
+  action: { ...font('700'), fontSize: 13, color: colors.green },
 });

@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 import { Hero } from './Hero';
 import { Logo } from './Logo';
 
@@ -18,6 +18,6 @@ export function Brand({ title, subtitle }: { title: string; subtitle: string }) 
 
 const s = StyleSheet.create({
   hero: { paddingHorizontal: 24, paddingBottom: 64, borderBottomLeftRadius: 32, borderBottomRightRadius: 32 },
-  title: { color: colors.white, fontSize: 30, fontWeight: '800', marginTop: 36, letterSpacing: -0.8, lineHeight: 36 },
-  subtitle: { color: 'rgba(255,255,255,0.78)', fontSize: 15, marginTop: 8, lineHeight: 22 },
+  title: { ...font('800'), color: colors.white, fontSize: 30, marginTop: 36, letterSpacing: -0.8, lineHeight: 36 },
+  subtitle: { ...font('400'), color: 'rgba(255,255,255,0.78)', fontSize: 15, marginTop: 8, lineHeight: 22 },
 });

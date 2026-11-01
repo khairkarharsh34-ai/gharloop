@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { listJoinRequests, setMemberStatus } from '@/lib/api';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 import type { JoinRequest, Profile } from '@/lib/types';
 import { Avatar } from './Avatar';
 import { Button } from './Button';
@@ -38,7 +38,7 @@ export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number
     try {
       await setMemberStatus(id, accept ? 'approved' : 'rejected');
       setItems((list) => list?.filter((r) => r.id !== id) ?? null);
-      toast(accept ? 'Resident approved 🎉' : 'Request rejected');
+      toast(accept ? 'Resident approved' : 'Request rejected');
     } catch (e) {
       toast((e as Error).message);
     } finally {
@@ -49,7 +49,7 @@ export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number
   if (error) return <ErrorState message={error} onRetry={load} />;
   if (!items) return <Loading label="Loading requests…" />;
   if (!items.length)
-    return <EmptyState icon="✅" title="All caught up" text="New residents waiting for approval will show up here." />;
+    return <EmptyState icon="checkmark-done-outline" title="All caught up" text="New residents waiting for approval will show up here." />;
 
   return (
     <View>
@@ -79,8 +79,8 @@ export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number
 
 const s = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  name: { fontSize: 16, fontWeight: '700', color: colors.ink },
-  meta: { fontSize: 12, color: colors.muted, marginTop: 2 },
+  name: { ...font('700'), fontSize: 16, color: colors.ink },
+  meta: { ...font('400'), fontSize: 12, color: colors.muted, marginTop: 2 },
   actions: { flexDirection: 'row', gap: 10, marginTop: 14 },
   flex: { flex: 1 },
 });

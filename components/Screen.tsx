@@ -2,7 +2,8 @@ import { router } from 'expo-router';
 import type { ReactNode } from 'react';
 import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
+import { Icon } from './Icon';
 
 type Props = {
   children: ReactNode;
@@ -36,7 +37,8 @@ export function Screen({ children, title, subtitle, back, right, refreshing = fa
       >
         {back ? (
           <Pressable onPress={goBack} hitSlop={10} style={s.back}>
-            <Text style={s.backText}>‹  Back</Text>
+            <Icon name="chevron-back" size={20} color={colors.green} />
+            <Text style={s.backText}>Back</Text>
           </Pressable>
         ) : null}
         {title ? (
@@ -58,9 +60,9 @@ const s = StyleSheet.create({
   page: { flex: 1, backgroundColor: colors.bg },
   content: { paddingHorizontal: 18, paddingBottom: 40 },
   bleed: { paddingBottom: 40 },
-  back: { alignSelf: 'flex-start', marginBottom: 14, paddingVertical: 4 },
-  backText: { color: colors.green, fontWeight: '700', fontSize: 15 },
+  back: { alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 2, marginBottom: 14, marginLeft: -4, paddingVertical: 4 },
+  backText: { ...font('700'), color: colors.green, fontSize: 15 },
   head: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 18 },
-  title: { fontSize: 30, fontWeight: '800', color: colors.ink, letterSpacing: -0.8 },
-  subtitle: { fontSize: 14, color: colors.muted, marginTop: 4, lineHeight: 20 },
+  title: { ...font('800'), fontSize: 30, color: colors.ink, letterSpacing: -0.8 },
+  subtitle: { ...font('400'), fontSize: 14, color: colors.muted, marginTop: 4, lineHeight: 20 },
 });

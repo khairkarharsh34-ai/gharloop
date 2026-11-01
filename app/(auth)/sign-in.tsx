@@ -8,7 +8,7 @@ import { Input } from '@/components/Input';
 import { Screen } from '@/components/Screen';
 import { Fine } from '@/components/Typography';
 import { signIn } from '@/lib/api';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -51,7 +51,7 @@ export default function SignIn() {
 const s = StyleSheet.create({
   body: { paddingHorizontal: 18, marginTop: -40 },
   card: { padding: 20, paddingTop: 8 },
-  error: { color: colors.red, fontSize: 13, marginTop: 12 },
-  link: { textAlign: 'center', color: colors.muted, fontSize: 14, marginTop: 10 },
-  linkBold: { color: colors.green, fontWeight: '800' },
+  error: { ...font('400'), color: colors.red, fontSize: 13, marginTop: 12 },
+  link: { ...font('400'), textAlign: 'center', color: colors.muted, fontSize: 14, marginTop: 10 },
+  linkBold: { ...font('800'), color: colors.green },
 });

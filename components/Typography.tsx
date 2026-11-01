@@ -1,5 +1,5 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 
 /** Large page title */
 export const Hello = ({ style, ...p }: TextProps) => <Text style={[s.hello, style]} {...p} />;
@@ -17,9 +17,9 @@ export const Overline = ({ style, ...p }: TextProps) => <Text style={[s.overline
 export const Fine = ({ style, ...p }: TextProps) => <Text style={[s.fine, style]} {...p} />;
 
 const s = StyleSheet.create({
-  hello: { fontSize: 26, fontWeight: '800', color: colors.ink, letterSpacing: -0.5 },
-  muted: { fontSize: 13, color: colors.muted, marginTop: 3, lineHeight: 19 },
-  bold: { fontSize: 15, fontWeight: '700', color: colors.ink, letterSpacing: -0.1 },
-  overline: { fontSize: 11, fontWeight: '800', color: colors.muted, letterSpacing: 0.8, textTransform: 'uppercase' },
-  fine: { fontSize: 11, color: colors.faint, lineHeight: 16, marginTop: 12, marginHorizontal: 4, textAlign: 'center' },
+  hello: { ...font('800'), fontSize: 26, color: colors.ink, letterSpacing: -0.5 },
+  muted: { ...font('400'), fontSize: 13, color: colors.muted, marginTop: 3, lineHeight: 19 },
+  bold: { ...font('700'), fontSize: 15, color: colors.ink, letterSpacing: -0.1 },
+  overline: { ...font('800'), fontSize: 11, color: colors.muted, letterSpacing: 0.8, textTransform: 'uppercase' },
+  fine: { ...font('400'), fontSize: 11, color: colors.faint, lineHeight: 16, marginTop: 12, marginHorizontal: 4, textAlign: 'center' },
 });

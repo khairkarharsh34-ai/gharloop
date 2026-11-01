@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { listSocieties } from '@/lib/api';
-import { colors, radius } from '@/lib/theme';
+import { colors, radius, font } from '@/lib/theme';
 import type { Society } from '@/lib/types';
 import { EmptyState, ErrorState, Loading } from './States';
 
@@ -29,7 +29,7 @@ export function SocietyPicker({ value, onChange }: Props) {
   if (error) return <View style={s.gap}><ErrorState message={error} onRetry={load} /></View>;
   if (!items) return <Loading label="Loading societies…" />;
   if (!items.length)
-    return <View style={s.gap}><EmptyState icon="🏘️" title="No societies yet" text="Ask the Padosi team to add your society first." /></View>;
+    return <View style={s.gap}><EmptyState icon="business-outline" title="No societies yet" text="Ask the Padosi team to add your society first." /></View>;
 
   return (
     <View style={[s.gap, s.list]}>
@@ -66,6 +66,6 @@ const s = StyleSheet.create({
   radio: { width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: colors.faint, alignItems: 'center', justifyContent: 'center' },
   radioOn: { borderColor: colors.green },
   dot: { width: 10, height: 10, borderRadius: 5, backgroundColor: colors.green },
-  name: { fontSize: 15, fontWeight: '700', color: colors.ink },
-  city: { fontSize: 12, color: colors.muted, marginTop: 1 },
+  name: { ...font('700'), fontSize: 15, color: colors.ink },
+  city: { ...font('400'), fontSize: 12, color: colors.muted, marginTop: 1 },
 });

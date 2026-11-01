@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { tints, type Tint } from '@/lib/theme';
+import { tints, type Tint, font } from '@/lib/theme';
 
 const order: Tint[] = ['green', 'blue', 'purple', 'orange', 'teal', 'rose', 'gold'];
 
@@ -11,7 +11,7 @@ export function Avatar({ name, size = 44 }: { name: string; size?: number }) {
       .split(/\s+/)
       .slice(0, 2)
       .map((w) => w[0]?.toUpperCase() ?? '')
-      .join('') || '🙂';
+      .join('') || '?';
   const hash = [...name].reduce((n, c) => n + c.charCodeAt(0), 0);
   const t = tints[order[hash % order.length]];
   return (
@@ -23,5 +23,5 @@ export function Avatar({ name, size = 44 }: { name: string; size?: number }) {
 
 const s = StyleSheet.create({
   circle: { alignItems: 'center', justifyContent: 'center' },
-  text: { fontWeight: '800', letterSpacing: 0.3 },
+  text: { ...font('800'), letterSpacing: 0.3 },
 });

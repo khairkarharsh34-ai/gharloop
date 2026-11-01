@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { colors } from '@/lib/theme';
+import { colors, font } from '@/lib/theme';
 
 // Small dark message above the tab bar.
 // Used instead of Alert because Alert does nothing in the web version.
@@ -32,14 +32,13 @@ export const useToast = () => useContext(ToastContext);
 
 const s = StyleSheet.create({
   wrap: { position: 'absolute', left: 20, right: 20, bottom: 110, alignItems: 'center' },
-  toast: {
+  toast: { ...font('600'),
     backgroundColor: colors.ink,
     color: colors.white,
     paddingVertical: 12,
     paddingHorizontal: 18,
     borderRadius: 14,
     fontSize: 14,
-    fontWeight: '600',
     overflow: 'hidden',
     textAlign: 'center',
   },
