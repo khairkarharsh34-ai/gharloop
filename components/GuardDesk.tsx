@@ -8,6 +8,7 @@ import type { Visitor } from '@/lib/types';
 import { useLoad } from '@/lib/useLoad';
 import { Button } from './Button';
 import { Card } from './Card';
+import { EmergencyCalls } from './EmergencyCalls';
 import { ItemCard } from './ItemCard';
 import { Pill } from './Pill';
 import { Section } from './Section';
@@ -60,6 +61,10 @@ export function GuardDesk() {
 
   return (
     <View>
+      <Card style={{ padding: 18, marginBottom: 12 }}>
+        <Text style={{ ...font('800'), fontSize: 16, color: colors.ink }}>Emergency numbers</Text>
+        <EmergencyCalls />
+      </Card>
       <Card style={{ padding: 18 }}>
         <StepHeader n={1} title="Verify entry code" hint="Ask the visitor for their 6-digit code" />
         <TextInput

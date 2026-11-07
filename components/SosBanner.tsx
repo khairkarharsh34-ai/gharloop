@@ -60,6 +60,7 @@ export function SosBanner({ children }: { children: ReactNode }) {
                 {mine && !responder ? 'SOS sent. Help is on the way' : `SOS · ${a.person?.full_name ?? 'Resident'} · ${flatOf(a.person) || 'flat unknown'}`}
               </Text>
               <Text style={s.sub}>
+                {a.note && !(mine && !responder) ? `${a.note} · ` : ''}
                 {ago(a.created_at)}
                 {alerts.length > 1 ? ` · +${alerts.length - 1} more active` : ''}
                 {mine && !responder ? ' · Security and your admin were alerted' : ''}
