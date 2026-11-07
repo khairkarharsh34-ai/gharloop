@@ -7,7 +7,7 @@ and as a website that can be added to an iPhone's Home Screen.
 
 | Module | What works |
 |---|---|
-| Accounts | Sign up, sign in, forgot/reset password, society join requests approved by the Society Admin |
+| Accounts | Sign up / sign in with **mobile number or email** + password (free, no SMS), forgot/reset password, admin can set a temporary password, society join requests approved by the Society Admin |
 | Home | Greeting, quick actions (role-aware), module grid, live "This week" feed |
 | Resolve | Report issues with photo, owner + deadline, status timeline, comments, close only with proof photo |
 | Community | Notices with RSVP, neighbour board (ask/lend/recommend), live group chats |
@@ -35,6 +35,10 @@ and as a website that can be added to an iPhone's Home Screen.
 1. `supabase/001_foundation.sql`: societies, profiles, roles, security
 2. `supabase/002_modules.sql`: every module, photo storage, live updates, phone privacy
 3. `supabase/003_demo_data.sql`: optional demo neighbours and content for "Green Valley Heights"
+4. `supabase/004_mobile_login.sql`: lets admins set a temporary password (for mobile-number accounts)
+
+Mobile login is free: a number like 9876543210 signs in behind the scenes as `9876543210@m.gharloop.com`
+(email confirmation must stay off). No SMS is sent, so the number is not verified; admin approval covers that.
 
 Demo logins created by 003 (password `GharLoop@2026`):
 

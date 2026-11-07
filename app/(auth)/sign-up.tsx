@@ -6,15 +6,18 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Input } from '@/components/Input';
 import { Screen } from '@/components/Screen';
+import { Segmented } from '@/components/Segmented';
 import { SocietyPicker } from '@/components/SocietyPicker';
 import { useToast } from '@/components/Toast';
 import { StepHeader } from '@/components/StepHeader';
 import { Fine } from '@/components/Typography';
 import { signUp } from '@/lib/api';
+import { cleanMobile, LOGIN_MODES, type LoginMode } from '@/lib/phone';
 import { colors, font } from '@/lib/theme';
 
 export default function SignUp() {
   const toast = useToast();
+  const [mode, setMode] = useState<LoginMode>('mobile');
   const [form, setForm] = useState({ full_name: '', email: '', password: '', phone: '', tower: '', flat: '' });
   const [societyId, setSocietyId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -24,7 +27,8 @@ export default function SignUp() {
 
   async function submit() {
     if (!form.full_name.trim()) return setError('Enter your name.');
-    if (!form.email.trim()) return setError('Enter your email.');
+    if (mode === 'mobile' && !cleanMobile(form.phone)) return setError('Enter a valid 10-digit mobile number.');
+    if (mode === 'email' && !form.email.includes('@')) return setError('Enter your email.');
     if (form.password.length < 6) return setError('Password must be at least 6 characters.');
     if (!societyId) return setError('Choose your society.');
     if (!form.flat.trim()) return setError('Enter your flat number.');
@@ -32,7 +36,7 @@ export default function SignUp() {
     setError(null);
     try {
       const { needsConfirm } = await signUp({
-        email: form.email.trim(),
+        login: mode === 'mobile' ? form.phone.trim() : form.email.trim(),
         password: form.password,
         full_name: form.full_name.trim(),
         phone: form.phone.trim(),
@@ -58,9 +62,18 @@ export default function SignUp() {
         <Card style={s.card}>
           <StepHeader n={1} title="About you" />
           <Input label="Full name" value={form.full_name} onChangeText={set('full_name')} placeholder="Akash Sharma" autoComplete="name" />
-          <Input label="Email" value={form.email} onChangeText={set('email')} autoCapitalize="none" keyboardType="email-address" autoComplete="email" placeholder="you@example.com" />
+          <View style={{ marginTop: 14, marginBottom: -2 }}>
+            <Segmented options={LOGIN_MODES} value={mode} onChange={(m) => { setMode(m); setError(null); }} />
+          </View>
+          {mode === 'mobile' ? (
+            <Input label="Mobile number" value={form.phone} onChangeText={set('phone')} keyboardType="phone-pad" autoComplete="tel" placeholder="98765 43210" maxLength={16} />
+          ) : (
+            <>
+              <Input label="Email" value={form.email} onChangeText={set('email')} autoCapitalize="none" keyboardType="email-address" autoComplete="email" placeholder="you@example.com" />
+              <Input label="Phone (optional)" value={form.phone} onChangeText={set('phone')} keyboardType="phone-pad" placeholder="+91" />
+            </>
+          )}
           <Input label="Password" value={form.password} onChangeText={set('password')} secureTextEntry placeholder="At least 6 characters" autoComplete="new-password" />
-          <Input label="Phone (optional)" value={form.phone} onChangeText={set('phone')} keyboardType="phone-pad" placeholder="+91" />
         </Card>
         <Card style={s.card}>
           <StepHeader n={2} title="Your home" hint="Pick your society and flat" />

@@ -16,6 +16,7 @@ import { signOut } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import { colors, font } from '@/lib/theme';
 import { isAdmin, roleLabel } from '@/lib/types';
+import { mobileFromLogin, showMobile } from '@/lib/phone';
 
 export default function ProfileTab() {
   const { profile, error, refresh, session } = useAuth();
@@ -46,13 +47,14 @@ export default function ProfileTab() {
   if (!profile) return <Loading />;
 
   const flat = [profile.tower, profile.flat].filter(Boolean).join('-');
+  const loginMobile = mobileFromLogin(session?.user.email);
 
   return (
     <Screen title="Profile" onRefresh={reload} refreshing={refreshing}>
       <Card style={s.me}>
         <Avatar name={profile.full_name || '?'} size={76} />
         <Text style={s.name}>{profile.full_name || 'Your name'}</Text>
-        <Text style={s.email}>{session?.user.email}</Text>
+        <Text style={s.email}>{loginMobile ? showMobile(loginMobile) : session?.user.email}</Text>
         <View style={s.chips}>
           <Pill label={roleLabel[profile.role]} />
           {flat ? <Pill label={`Flat ${flat}`} tone="grey" /> : null}
@@ -85,7 +87,8 @@ export default function ProfileTab() {
         ) : null}
         <LinkRow icon="shield-checkmark-outline" tint="slate" title={profile.role === 'guard' ? 'Gate desk' : 'My visitors'} onPress={() => router.push('/gate')} />
         <LinkRow icon="hand-left-outline" tint="rose" title="My help requests" onPress={() => router.push('/help')} />
-        <LinkRow icon="wallet-outline" tint="gold" title="Maintenance & funds" onPress={() => router.push('/funds')} last />
+        <LinkRow icon="wallet-outline" tint="gold" title="Maintenance & funds" onPress={() => router.push('/funds')} />
+        <LinkRow icon="key-outline" tint="green" title="Change password" onPress={() => router.push('/reset-password')} last />
       </Card>
 
       <Section title="Help & legal" />

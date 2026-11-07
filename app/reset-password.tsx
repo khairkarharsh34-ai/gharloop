@@ -11,7 +11,7 @@ import { ErrorText, Muted } from '@/components/Typography';
 import { updatePassword } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 
-/** Opened from the password-reset email. The link signs the user in; here they choose a new password. */
+/** Opened from the password-reset email (the link signs the user in), or from Profile → Change password. */
 export default function ResetPassword() {
   const { session } = useAuth();
   const toast = useToast();
@@ -27,7 +27,7 @@ export default function ResetPassword() {
     setError(null);
     try {
       await updatePassword(pw);
-      toast('Password updated. Welcome back!');
+      toast('Password updated.');
       router.replace('/');
     } catch (e) {
       setError((e as Error).message);
