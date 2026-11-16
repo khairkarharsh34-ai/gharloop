@@ -70,3 +70,9 @@ Netlify builds from `netlify.toml`. Set `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUB
 in Netlify's environment variables. Every push to `main` redeploys.
 
 Note: free Supabase projects pause after 7 days without use; click **Restore** in the dashboard.
+
+## Website (gharloop.com)
+
+The marketing site is plain HTML/CSS in `website/` (no build step), deployed as a **second Netlify site**
+from this repo with base directory `website`. The "Request a demo" form uses Netlify Forms
+(submissions appear in Netlify → Forms). The logo and brand kit live in `brand/`.
