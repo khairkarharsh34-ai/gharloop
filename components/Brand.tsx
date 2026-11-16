@@ -9,7 +9,7 @@ export function Brand({ title, subtitle }: { title: string; subtitle: string }) 
   const insets = useSafeAreaInsets();
   return (
     <Hero style={[s.hero, { paddingTop: insets.top + 34 }]}>
-      <Logo />
+      <Logo size={46} />
       <Text style={s.title}>{title}</Text>
       <Text style={s.subtitle}>{subtitle}</Text>
     </Hero>

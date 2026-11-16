@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><defs>
+  <linearGradient id="gl-house" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a7a5c"/><stop offset="1" stop-color="#143f30"/></linearGradient>
+  <linearGradient id="gl-loop" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f2a33a"/><stop offset="1" stop-color="#e8862a"/></linearGradient>
+</defs>
+  <rect x="334" y="88" width="46" height="96" rx="14" fill="#f2a33a"/>
+  <path d="M98 240 L256 98 L414 240" fill="none" stroke="#ffffff" stroke-width="54" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M132 262 V368 Q132 422 186 422 H326 Q380 422 380 368 V262" fill="none" stroke="#ffffff" stroke-width="46" stroke-linecap="round"/>
+  <rect x="226" y="150" width="28" height="28" rx="8" fill="#f2a33a"/><rect x="260" y="150" width="28" height="28" rx="8" fill="#ffffff"/><rect x="226" y="184" width="28" height="28" rx="8" fill="#ffffff"/><rect x="260" y="184" width="28" height="28" rx="8" fill="#f2a33a"/>
+  <circle cx="190" cy="312" r="21" fill="#bfe0cf"/>
+  <path d="M158 394 V380 Q158 344 190 344 Q222 344 222 380 V394 Z" fill="#bfe0cf"/>
+  <circle cx="322" cy="312" r="21" fill="#ffffff"/>
+  <path d="M290 394 V380 Q290 344 322 344 Q354 344 354 380 V394 Z" fill="#ffffff"/>
+  <circle cx="256" cy="282" r="29" fill="#f2a33a"/>
+  <path d="M210 394 V368 Q210 320 256 320 Q302 320 302 368 V394 Z" fill="#f2a33a"/></svg>

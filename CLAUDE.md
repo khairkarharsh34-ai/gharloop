@@ -23,7 +23,8 @@ resident, guard, society_admin, super_admin
 - Shapes: 20px card radius, 14px buttons/inputs, pill badges, 50px tall buttons.
 - Each module has its own pastel tint (`tints` in lib/theme.ts) used for its icon chip.
 - Big bold page titles (30px), green hero panel with soft circles on Home and login screens.
-- Logo: marigold rounded square with "घ" + "ghar" white / "loop" marigold wordmark (components/Logo.tsx).
+- Logo: house with three people + "Gharloop" wordmark where "oo" is a marigold infinity loop. Vector source and
+  exports live in /brand (regenerate PNGs from the SVGs); the app uses assets/logo-white.png via components/Logo.tsx.
 - Bottom tabs: Home, Resolve, Community, Activities, Profile (active tab = soft green pill).
 - Module list (icons, tints, copy) lives in lib/modules.ts.
 
