@@ -10,6 +10,7 @@ import { ToastProvider } from '@/components/Toast';
 import { Muted } from '@/components/Typography';
 import { AuthProvider, useAuth } from '@/lib/auth';
 import { appFonts } from '@/lib/fonts';
+import { NOTICE_VERSION } from '@/lib/legal';
 import { isConfigured } from '@/lib/supabase';
 import { colors, maxWidth } from '@/lib/theme';
 
@@ -48,16 +49,22 @@ function Routes() {
   useEffect(() => {
     if (loading) return;
     if (area === 'reset-password') return; // reached from the reset email: stay there
+    if (area === 'module') return; // privacy notice, guidelines, grievance: open to everyone
     const inAuth = area === '(auth)';
     const inPending = area === 'pending';
+    const inConsent = area === 'consent';
+    // undefined = consent can't be checked yet (005 not run), so nobody is blocked.
+    const needsConsent = !!profile && profile.consent !== undefined && profile.consent !== NOTICE_VERSION;
     if (!session) {
       if (!inAuth) router.replace('/sign-in');
+    } else if (needsConsent) {
+      if (!inConsent) router.replace('/consent');
     } else if (profile?.status !== 'approved') {
       if (!inPending) router.replace('/pending');
-    } else if (inAuth || inPending) {
+    } else if (inAuth || inPending || inConsent) {
       router.replace('/');
     }
-  }, [loading, session, profile?.status, area]);
+  }, [loading, session, profile?.status, profile?.consent, area]);
 
   if (loading) return <Loading />;
 

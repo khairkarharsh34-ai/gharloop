@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import type { JoinRequest, MemberStatus, Profile, Society } from '../types';
 import { cleanMobile, mobileLogin } from '../phone';
 import { mustChange, run, supabase } from './client';
+import { getMyConsent } from './privacy';
 
 export type SignUpInput = {
   /** An email address, or a 10-digit mobile number for mobile login. */
@@ -13,6 +14,9 @@ export type SignUpInput = {
   society_id: string;
   tower: string;
   flat: string;
+  /** Confirmed on the sign-up screen (DPDP: 18+ and privacy notice). */
+  adult: boolean;
+  consent_version: string;
 };
 
 /** Returns needsConfirm=true when Supabase wants the user to click an email link first. */
@@ -81,8 +85,8 @@ export async function getMyProfile(): Promise<Profile | null> {
   );
   if (!profile) return null;
   // Phone numbers are private: only readable for yourself (needs 002_modules.sql; null until then).
-  const { data: phone } = await supabase.rpc('my_phone');
-  return { ...profile, phone: (phone as string | null) ?? null };
+  const [{ data: phone }, consent] = await Promise.all([supabase.rpc('my_phone'), getMyConsent()]);
+  return { ...profile, phone: (phone as string | null) ?? null, consent };
 }
 
 export type ProfilePatch = Partial<Pick<Profile, 'full_name' | 'phone' | 'tower' | 'flat' | 'society_id'>>;

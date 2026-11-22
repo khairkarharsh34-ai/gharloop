@@ -95,7 +95,8 @@ export default function ProfileTab() {
       <Card style={s.list}>
         <LinkRow icon="book-outline" tint="blue" title="Community guidelines" onPress={() => router.push('/module/guidelines')} />
         <LinkRow icon="mail-outline" tint="rose" title="Report a problem" subtitle="Contact the Grievance Officer" onPress={() => router.push('/module/grievance')} />
-        <LinkRow icon="lock-closed-outline" tint="slate" title="Privacy & data" onPress={() => router.push('/module/privacy')} last />
+        <LinkRow icon="lock-closed-outline" tint="slate" title="Privacy Notice" onPress={() => router.push('/module/privacy')} />
+        <LinkRow icon="shield-checkmark-outline" tint="green" title="Your data & privacy" subtitle="Download or delete your data" onPress={() => router.push('/my-data')} last />
       </Card>
 
       <Button title="Sign out" variant="danger" onPress={logout} full />

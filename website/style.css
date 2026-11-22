@@ -230,3 +230,5 @@ details p { color: var(--ink2); padding-bottom: 18px; }
   .offer { margin-top: -16px; }
 }
 @media (prefers-reduced-motion: reduce) { .float { animation: none; } html { scroll-behavior: auto; } .btn:hover, .feat:hover { transform: none; } }
+.form label.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: 13px; line-height: 1.5; color: var(--ink2); }
+.form label.check input { width: 18px; height: 18px; margin-top: 1px; accent-color: var(--green); flex-shrink: 0; padding: 0; }

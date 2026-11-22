@@ -13,6 +13,8 @@ import { StepHeader } from '@/components/StepHeader';
 import { Fine } from '@/components/Typography';
 import { signUp } from '@/lib/api';
 import { cleanMobile, LOGIN_MODES, type LoginMode } from '@/lib/phone';
+import { NOTICE_VERSION } from '@/lib/legal';
+import { ConsentChecks, type Consent } from '@/components/ConsentChecks';
 import { colors, font } from '@/lib/theme';
 
 export default function SignUp() {
@@ -20,6 +22,7 @@ export default function SignUp() {
   const [mode, setMode] = useState<LoginMode>('mobile');
   const [form, setForm] = useState({ full_name: '', email: '', password: '', phone: '', tower: '', flat: '' });
   const [societyId, setSocietyId] = useState<string | null>(null);
+  const [consent, setConsent] = useState<Consent>({ adult: false, privacy: false });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,6 +35,8 @@ export default function SignUp() {
     if (form.password.length < 6) return setError('Password must be at least 6 characters.');
     if (!societyId) return setError('Choose your society.');
     if (!form.flat.trim()) return setError('Enter your flat number.');
+    if (!consent.adult) return setError('Ghar Loop accounts are only for people aged 18 or older.');
+    if (!consent.privacy) return setError('Please read and accept the Privacy Notice to continue.');
     setBusy(true);
     setError(null);
     try {
@@ -43,6 +48,8 @@ export default function SignUp() {
         tower: form.tower.trim(),
         flat: form.flat.trim(),
         society_id: societyId,
+        adult: true,
+        consent_version: NOTICE_VERSION,
       });
       if (needsConfirm) {
         toast('Check your email and tap the link, then sign in.');
@@ -86,6 +93,7 @@ export default function SignUp() {
               <Input label="Flat" value={form.flat} onChangeText={set('flat')} placeholder="1204" />
             </View>
           </View>
+          <ConsentChecks value={consent} onChange={setConsent} />
           {error ? <Text style={s.error}>{error}</Text> : null}
           <Button title="Create account" onPress={submit} loading={busy} full style={{ marginTop: 20 }} />
         </Card>

@@ -44,3 +44,6 @@ Gate and Visitors (6-digit code, guard screen, SOS), Admin and Super Admin.
 - Work one module at a time. After each module, tell me how to test it (live web link and Expo Go).
 - Explain every command I must run. Ask before installing anything extra.
 - Budget is zero for services: free tiers only.
+- Privacy (DPDP Act): no analytics, session replay or trackers without opt-in consent; never put a secret/service key in
+  app or website code; new personal data must appear in lib/legal.ts (notice) and export_my_data(). Bump NOTICE_VERSION
+  when the notice changes. Checklist: docs/privacy-compliance.md.

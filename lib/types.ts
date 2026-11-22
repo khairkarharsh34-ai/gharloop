@@ -18,6 +18,8 @@ export type Profile = {
   status: MemberStatus;
   created_at: string;
   society: Society | null;
+  /** Privacy notice version accepted (with 18+). null = not yet; undefined = unknown, don't block. */
+  consent?: string | null;
 };
 
 export type JoinRequest = Pick<Profile, 'id' | 'full_name' | 'tower' | 'flat' | 'created_at'> & {

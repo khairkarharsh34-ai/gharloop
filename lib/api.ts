@@ -9,5 +9,6 @@ export * from './api/gate';
 export * from './api/help';
 export * from './api/home';
 export * from './api/photos';
+export * from './api/privacy';
 export * from './api/resolve';
 export * from './api/services';

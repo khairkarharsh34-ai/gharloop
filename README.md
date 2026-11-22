@@ -36,6 +36,9 @@ and as a website that can be added to an iPhone's Home Screen.
 2. `supabase/002_modules.sql`: every module, photo storage, live updates, phone privacy
 3. `supabase/003_demo_data.sql`: optional demo neighbours and content for "Green Valley Heights"
 4. `supabase/004_mobile_login.sql`: lets admins set a temporary password (for mobile-number accounts)
+5. `supabase/005_privacy_dpdp.sql`: DPDP consent (18+ and privacy notice), download my data, delete my account, data clean-up
+
+Privacy and consumer-law checklist (DPDP, CCPA, RBI) and the 72-hour breach plan: `docs/privacy-compliance.md`.
 
 Mobile login is free: a number like 9876543210 signs in behind the scenes as `9876543210@m.gharloop.com`
 (email confirmation must stay off). No SMS is sent, so the number is not verified; admin approval covers that.
