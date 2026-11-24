@@ -1,4 +1,4 @@
-import { Link, router } from 'expo-router';
+import { Link, router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Brand } from '@/components/Brand';
@@ -19,6 +19,7 @@ import { colors, font } from '@/lib/theme';
 
 export default function SignUp() {
   const toast = useToast();
+  const { code } = useLocalSearchParams<{ code?: string }>();
   const [mode, setMode] = useState<LoginMode>('mobile');
   const [form, setForm] = useState({ full_name: '', email: '', password: '', phone: '', tower: '', flat: '' });
   const [societyId, setSocietyId] = useState<string | null>(null);
@@ -84,7 +85,7 @@ export default function SignUp() {
         </Card>
         <Card style={s.card}>
           <StepHeader n={2} title="Your home" hint="Pick your society and flat" />
-          <SocietyPicker value={societyId} onChange={setSocietyId} />
+          <SocietyPicker value={societyId} onChange={setSocietyId} initialCode={code} />
           <View style={s.two}>
             <View style={s.half}>
               <Input label="Tower / Wing" value={form.tower} onChangeText={set('tower')} placeholder="B" autoCapitalize="characters" />

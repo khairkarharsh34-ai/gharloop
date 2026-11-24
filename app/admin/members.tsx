@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Avatar } from '@/components/Avatar';
@@ -27,7 +28,10 @@ export default function Members() {
   const toast = useToast();
   const [open, setOpen] = useState<string | null>(null);
   const [temp, setTemp] = useState<{ id: string; password: string } | null>(null);
-  const { data, error, loading, refreshing, refresh, reload } = useLoad(() => listMembers(profile!.society_id!), [profile?.society_id]);
+  // A Super Admin can open any society's members (admin/society/[id] passes ?society=…).
+  const params = useLocalSearchParams<{ society?: string }>();
+  const sid = (profile?.role === 'super_admin' && params.society) || profile?.society_id || '';
+  const { data, error, loading, refreshing, refresh, reload } = useLoad(() => listMembers(sid), [sid]);
 
   async function run(fn: () => Promise<void>, msg: string) {
     try {

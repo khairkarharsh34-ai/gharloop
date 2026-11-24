@@ -71,8 +71,13 @@ export async function updatePassword(password: string) {
   if (error) throw new Error(error.message);
 }
 
-export const listSocieties = () =>
-  run<Society[]>(supabase.from('societies').select('id, name, city').order('name'));
+/** Societies shown at sign-up (hidden demo/test societies left out). */
+export async function listSocieties() {
+  const listed = await supabase.from('societies').select('id, name, city').eq('is_listed', true).order('name');
+  if (!listed.error) return listed.data as Society[];
+  // Before 006_pilot.sql there is no is_listed column: show them all.
+  return run<Society[]>(supabase.from('societies').select('id, name, city').order('name'));
+}
 
 const PROFILE_COLS = 'id, full_name, society_id, tower, flat, role, status, created_at, society:societies(id, name, city)';
 

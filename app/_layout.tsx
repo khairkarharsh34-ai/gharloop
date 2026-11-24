@@ -56,7 +56,7 @@ function Routes() {
     // undefined = consent can't be checked yet (005 not run), so nobody is blocked.
     const needsConsent = !!profile && profile.consent !== undefined && profile.consent !== NOTICE_VERSION;
     if (!session) {
-      if (!inAuth) router.replace('/sign-in');
+      if (!inAuth && area !== 'join') router.replace('/sign-in'); // invite links work before login
     } else if (needsConsent) {
       if (!inConsent) router.replace('/consent');
     } else if (profile?.status !== 'approved') {

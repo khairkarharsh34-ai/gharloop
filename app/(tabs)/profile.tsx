@@ -91,6 +91,10 @@ export default function ProfileTab() {
         <LinkRow icon="key-outline" tint="green" title="Change password" onPress={() => router.push('/reset-password')} last />
       </Card>
 
+      <Card style={s.list}>
+        <LinkRow icon="chatbox-ellipses-outline" tint="purple" title="Send feedback" subtitle="Tell the Ghar Loop team what to improve" onPress={() => router.push('/feedback')} last />
+      </Card>
+
       <Section title="Help & legal" />
       <Card style={s.list}>
         <LinkRow icon="book-outline" tint="blue" title="Community guidelines" onPress={() => router.push('/module/guidelines')} />

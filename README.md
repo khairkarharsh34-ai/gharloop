@@ -37,6 +37,7 @@ and as a website that can be added to an iPhone's Home Screen.
 3. `supabase/003_demo_data.sql`: optional demo neighbours and content for "Green Valley Heights"
 4. `supabase/004_mobile_login.sql`: lets admins set a temporary password (for mobile-number accounts)
 5. `supabase/005_privacy_dpdp.sql`: DPDP consent (18+ and privacy notice), download my data, delete my account, data clean-up
+6. `supabase/006_pilot.sql`: society invite codes and links, hide demo society, maintenance setting, feedback, pilot stats
 
 Privacy and consumer-law checklist (DPDP, CCPA, RBI) and the 72-hour breach plan: `docs/privacy-compliance.md`.
 

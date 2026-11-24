@@ -11,14 +11,14 @@ import { EmptyState, ErrorState, Loading } from './States';
 import { useToast } from './Toast';
 
 /** Pending residents an admin can accept or reject. `reloadKey` changes on pull-to-refresh. */
-export function JoinRequests({ me, reloadKey }: { me: Profile; reloadKey: number }) {
+export function JoinRequests({ me, reloadKey, societyId: only }: { me: Profile; reloadKey: number; societyId?: string }) {
   const toast = useToast();
   const [items, setItems] = useState<JoinRequest[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [busyId, setBusyId] = useState<string | null>(null);
 
   // Super admins see every society; society admins only their own.
-  const societyId = me.role === 'super_admin' ? null : me.society_id;
+  const societyId = only ?? (me.role === 'super_admin' ? null : me.society_id);
 
   const load = useCallback(async () => {
     setError(null);

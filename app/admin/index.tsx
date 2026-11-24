@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityCard } from '@/components/ActivityCard';
 import { BusinessCard } from '@/components/BusinessCard';
@@ -10,7 +10,9 @@ import { Section } from '@/components/Section';
 import { Stat, StatGrid } from '@/components/Stat';
 import { ErrorState, Loading } from '@/components/States';
 import { useToast } from '@/components/Toast';
-import { getAdminStats, listActivities, listBusinesses, setBusinessStatus } from '@/lib/api';
+import { getAdminStats, getMaintenanceAmount, listActivities, listBusinesses, setBusinessStatus } from '@/lib/api';
+import { InviteCard } from '@/components/InviteCard';
+import { MaintenanceSetting } from '@/components/MaintenanceSetting';
 import { useAuth } from '@/lib/auth';
 import { useLoad } from '@/lib/useLoad';
 
@@ -20,13 +22,23 @@ export default function AdminHome() {
   const [reloadKey, setReloadKey] = useState(0);
   const sid = profile?.society_id ?? '';
   const { data, error, loading, refreshing, refresh, reload } = useLoad(async () => {
-    const [stats, activities, businesses] = await Promise.all([getAdminStats(sid), listActivities(), listBusinesses()]);
+    if (!sid) return null;
+    const [stats, activities, businesses, amount] = await Promise.all([
+      getAdminStats(sid),
+      listActivities(),
+      listBusinesses(),
+      getMaintenanceAmount(sid),
+    ]);
     return {
       stats,
+      amount,
       activities: activities.filter((a) => a.status === 'pending'),
       businesses: businesses.filter((b) => b.status === 'pending'),
     };
   }, [sid]);
+
+  // A Super Admin who isn't part of a society manages the whole platform instead.
+  if (!sid && profile?.role === 'super_admin') return <Redirect href="/admin/societies" />;
 
   const pull = () => {
     setReloadKey((k) => k + 1);
@@ -49,6 +61,9 @@ export default function AdminHome() {
             <Stat value={String(approvals)} label="Waiting for approval" icon="checkmark-done-outline" tint="gold" alert={approvals > 0} />
             <Stat value={String(st!.openHelp)} label="Open help requests" icon="hand-left-outline" tint="rose" alert={st!.openHelp > 0} onPress={() => router.push('/help')} />
           </StatGrid>
+
+          <Section title="Invite residents" />
+          <InviteCard societyId={sid} societyName={profile?.society?.name ?? 'Our society'} />
 
           <Section title="Resident requests" />
           <JoinRequests me={profile!} reloadKey={reloadKey} />
@@ -74,6 +89,9 @@ export default function AdminHome() {
             />
           ))}
 
+          <Section title="Society settings" />
+          <MaintenanceSetting key={data!.amount} societyId={sid} amount={data!.amount} onSaved={reload} />
+
           <Section title="Manage" />
           <Card style={{ paddingVertical: 4 }}>
             <LinkRow icon="megaphone-outline" tint="purple" title="Post a notice" onPress={() => router.push('/community/notice-new')} />
@@ -81,7 +99,10 @@ export default function AdminHome() {
             <LinkRow icon="shield-checkmark-outline" tint="slate" title="Gate desk" onPress={() => router.push('/gate')} />
             <LinkRow icon="wallet-outline" tint="gold" title="Funds ledger" onPress={() => router.push('/funds')} last={profile?.role !== 'super_admin'} />
             {profile?.role === 'super_admin' ? (
-              <LinkRow icon="business-outline" tint="blue" title="All societies" subtitle="Super Admin" onPress={() => router.push('/admin/societies')} last />
+              <>
+                <LinkRow icon="business-outline" tint="blue" title="All societies & pilots" subtitle="Super Admin" onPress={() => router.push('/admin/societies')} />
+                <LinkRow icon="chatbox-ellipses-outline" tint="purple" title="Feedback from residents" subtitle="Super Admin" onPress={() => router.push('/admin/feedback')} last />
+              </>
             ) : null}
           </Card>
         </>

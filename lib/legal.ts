@@ -1,7 +1,7 @@
 // Privacy notice and contacts (DPDP Act 2023 / DPDP Rules 2025). Plain language on purpose.
 // Bump NOTICE_VERSION whenever the privacy notice changes: everyone is asked to accept it again.
-export const NOTICE_VERSION = '2026-11';
-export const NOTICE_DATE = '22 November 2026';
+export const NOTICE_VERSION = '2026-11-24';
+export const NOTICE_DATE = '24 November 2026';
 export const GRIEVANCE_EMAIL = 'grievance@gharloop.com';
 export const MIN_AGE = 18;
 
@@ -13,7 +13,7 @@ export const privacyNotice: Section[] = [
     points: [
       'Account: your name, mobile number or email, and password (stored encrypted).',
       'Home: your society, tower and flat.',
-      'What you add: issues and photos, posts, chat messages, visitor passes, help requests, business listings and test payment records.',
+      'What you add: issues and photos, posts, chat messages, visitor passes, help requests, business listings, test payment records and feedback you send us.',
       'Safety: SOS alerts you send.',
       'We do not use advertising trackers, session recording or analytics that follow you.',
     ],
@@ -23,6 +23,7 @@ export const privacyNotice: Section[] = [
     points: [
       'To run your society on Ghar Loop: verify you are a resident, show notices, track issues and let guards check in your visitors.',
       'To alert your guard and committee when you send an SOS.',
+      'To improve Ghar Loop from your feedback, and to see how active each society is (counts only, never what you read or type).',
       'We use your data only for these purposes. We never sell it.',
     ],
   },
